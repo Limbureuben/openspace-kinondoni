@@ -1,0 +1,19 @@
+
+<!-- send-notification-dialog.component.html -->
+<h2 mat-dialog-title>Tuma Taarifa</h2>
+<mat-dialog-content>
+  <form [formGroup]="notificationForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ujumbe</mat-label>
+      <textarea matInput rows="4" formControlName="message" placeholder="Andika ujumbe wako"></textarea>
+      <mat-error *ngIf="notificationForm.get('message')?.hasError('required')">
+        Ujumbe unahitajika
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Ghairi</button>
+  <button mat-flat-button (click)="submit()" [ngStyle]="{ 'background-color': 'rgb(100, 100, 177)', 'color': '#fff' }">Tuma</button>
+</mat-dialog-actions>

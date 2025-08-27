@@ -1,0 +1,86 @@
+<div class="map-wrap">
+
+  <div class="map-style-toggle">
+    <select #styleSelect (change)="changeMapStyle(styleSelect.value)">
+      <option value="streets">Street</option>
+      <option value="hybrid">Satellite</option>
+      <option value="topo">Topographic</option>
+      <option value="basic">Basic</option>
+    </select>
+
+  </div>
+  <!-- Search Box -->
+  <div class="search-box">
+    <input #searchInput type="text" placeholder="Search location..." [(ngModel)]="searchQuery" (input)="fetchSuggestions()">
+    <button (click)="searchLocation()">🔍</button>
+    <ul class="suggestions-list" *ngIf="suggestions.length">
+      <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+        {{ suggestion.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="map" #map></div>
+
+  <!-- report-form.component.html -->
+  <div class="report-background" id="detailsForm">
+    <div id="closeFormBtn" (click)="closeForm()">
+      <div class="report-container" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeForm()">×</button>
+        <div *ngIf="emailWarning" class="email-warning">
+          ⚠️ To receive your report ID, please enter your email.
+        </div>
+        <form [formGroup]="reportForm" (ngSubmit)="submitReport()">
+          <p><strong>Open Space:</strong> <span id="location-name"></span></p>
+
+          <!-- Issue Description -->
+          <mat-form-field appearance="outline" class="full-width custom-input">
+            <mat-label>Issue Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Describe the issue here" required></textarea>
+            <mat-error *ngIf="reportForm.get('description')?.invalid && reportForm.get('description')?.touched">
+              Description is required
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Contact Email (Optional) -->
+          <mat-form-field appearance="outline" class="full-width custom-input">
+            <mat-label>Your Email (Optional)</mat-label>
+            <input matInput formControlName="email" placeholder="Enter your email (optional)" type="email" />
+            <mat-error *ngIf="reportForm.get('email')?.invalid && reportForm.get('email')?.touched">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <!-- File Upload -->
+          <div class="file-upload-container">
+            <label class="file-upload-label">Upload File (Optional)</label>
+            <div class="file-input-wrapper">
+              <input type="file" id="file-upload" (change)="onFileSelected($event)" />
+              <span class="file-name">{{ selectedFileName || 'No file chosen' }}</span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="submitting">
+              {{ submitting ? 'Submitting...' : 'Submit Report' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div *ngIf="showConfirmationModal" class="confirmation-modal">
+    <div class="modal-content">
+      <h3>Confirm Your Report</h3>
+      <p><strong>Description:</strong> {{ reportForm.value.description }}</p>
+      <p><strong>Email:</strong> {{ reportForm.value.email || 'Not Provided' }}</p>
+      <p><strong>File:</strong> {{ selectedFileName || 'No file selected' }}</p>
+
+      <div class="modal-actions">
+        <button mat-raised-button color="primary" (click)="confirmSubmission()">Confirm</button>
+        <button mat-raised-button color="warn" (click)="cancelSubmission()">Cancel</button>
+      </div>
+    </div>
+  </div>

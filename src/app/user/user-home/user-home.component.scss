@@ -1,0 +1,404 @@
+/* Header Styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, rgb(100, 100, 177), #47a1eb); /* Gradient background */
+  padding: 20px 40px;
+  height: 110px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  position: relative; /* For positioning the theme toggle */
+}
+
+.logo img {
+  height: 100px; /* Adjust logo size for balance */
+  width: auto;
+  max-width: 100%; /* Ensure the logo is responsive */
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.menu-toggle {
+  display: none; /* Hide on larger screens */
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
+.create-account {
+  background-color: #ffffff;
+  color: rgb(100, 100, 177);
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Button shadow */
+}
+
+.create-account:hover {
+  background-color: rgb(100, 100, 177);
+  color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.create-account:focus {
+  outline: none; /* Remove default focus outline */
+}
+
+/* Main Container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 65vh; /* Set to auto for flexibility based on content */
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+  padding: 30px 80px;
+}
+
+.cards-wrapper {
+  display: flex;
+  gap: 100px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center; /* Center the cards */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  text-align: center;
+  padding: 15px;
+  width: 280px;
+  height: 200px;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.04);
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+mat-card-title, mat-card-content {
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+/* Services Heading */
+.container h2,
+.container .description {
+  text-align: center; /* Align text with the cards */
+  width: 100%; /* Ensures it stretches to match the card width */
+  max-width: 900px; /* Limit width for better readability */
+  margin-bottom: 10px; /* Reduce space between heading, text, and cards */
+}
+
+h2 {
+  color: rgb(100, 100, 177);
+  top: 0px;
+}
+
+.title {
+  font-size: 25px;
+  color: white;
+  justify-content: left;
+  margin-left: -20px;
+  font-weight: bold;
+}
+
+.title h6 {
+  font-size: 15px;
+  margin-top: 5px;
+}
+
+/* Responsive Styling */
+@media screen and (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto; /* Allow header to shrink on small screens */
+    padding: 20px;
+  }
+
+  .logo img {
+    height: 200px; /* Adjust logo size for mobile */
+  }
+
+  .nav-buttons {
+    margin-top: 10px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .cards-wrapper {
+    gap: 20px; /* Reduce gap between cards */
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%; /* Make cards full-width on smaller screens */
+    height: auto; /* Allow card height to adjust with content */
+  }
+
+  h2 {
+    font-size: 22px; /* Adjust font size for smaller screens */
+  }
+
+  .description {
+    font-size: 14px; /* Adjust description font size for better readability */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    padding: 10px;
+  }
+
+  .logo img {
+    height: 150px; /* Adjust logo size for extra small screens */
+  }
+
+  .nav-buttons {
+    margin-top: 10px;
+  }
+
+  .cards-wrapper {
+    gap: 10px;
+  }
+
+  .card {
+    width: 100%;
+    height: auto;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Overlay background */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px; /* Prevents content from sticking to the edges */
+}
+
+.popup-card {
+  position: relative; /* Ensures proper positioning */
+  background: white;
+  padding: 20px;
+  border-radius: 2px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 90%;
+  max-width: 400px; /* Prevents excessive width on large screens */
+  animation: fadeIn 0.3s ease-in-out;
+  overflow: hidden; /* Prevents content from overflowing */
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333; /* Ensure visibility */
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+  color: red; /* Make it clear when hovered */
+}
+
+/* Buttons */
+.popup-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.popup-btn {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  transition: background 0.3s ease;
+}
+
+/* Primary Button */
+.create-account {
+  background: rgb(100, 100, 177);
+  color: white;
+}
+
+/* Secondary Button */
+.anonymous {
+  background: #E0E0E0;
+  color: black;
+}
+
+.anonymous:hover {
+  background: #C0C0C0;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 480px) {
+  .popup-card {
+    width: 95%; /* Adjusts width for very small devices */
+    padding: 15px;
+    max-width: 90%; /* Prevents unnecessary scaling */
+  }
+
+  h3 {
+    font-size: 18px; /* Adjusts heading size for small screens */
+  }
+
+  p {
+    font-size: 14px; /* Adjusts text for readability */
+  }
+
+  .popup-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Theme Toggle Button - Component Specific */
+.theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.theme-toggle mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  color: rgb(100, 100, 177);
+}
+
+/* Dark theme specific styles for this component */
+:host-context(body.dark-theme) .theme-toggle {
+  background-color: rgba(45, 45, 45, 0.9);
+}
+
+:host-context(body.dark-theme) .theme-toggle:hover {
+  background-color: rgba(45, 45, 45, 1);
+}
+
+:host-context(body.dark-theme) .theme-toggle mat-icon {
+  color: #ffffff;
+}
+
+/* Responsive adjustments for theme toggle */
+@media screen and (max-width: 768px) {
+  .theme-toggle {
+    top: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+  }
+
+  .theme-toggle mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .theme-toggle mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}

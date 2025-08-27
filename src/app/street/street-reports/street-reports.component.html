@@ -1,0 +1,82 @@
+<div class="table-container">
+  <div class="header-container">
+    <h2 class="table-title">REPORTS FROM YOUR STREET</h2>
+
+    <!-- Search Input -->
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search report</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter by street">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p style="margin-left: 15px;">Loading reports...</p>
+  </div>
+
+  <!-- Table Wrapper -->
+  <div class="table-wrapper" *ngIf="!isLoading">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table" @tableEnterAnimation>
+
+      <!-- Space Column -->
+      <ng-container matColumnDef="space_name">
+        <th mat-header-cell *matHeaderCellDef>OPENSPACE</th>
+        <td mat-cell *matCellDef="let row">{{ row.report?.space_name || row.space_name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="district">
+        <th mat-header-cell *matHeaderCellDef>DISTRICT</th>
+        <td mat-cell *matCellDef="let row">{{ row.report?.district || row.district }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="street">
+        <th mat-header-cell *matHeaderCellDef>STREET</th>
+        <td mat-cell *matCellDef="let row">{{ row.report?.street || row.street }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef>DATE</th>
+        <td mat-cell *matCellDef="let row">{{ row.report?.created_at || row.created_at }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="forwardReport(row); $event.stopPropagation()"
+            [disabled]="row.forwarded_to_admin"
+            [title]="row.forwarded_to_admin ? 'Already forwarded to admin' : 'Forward to admin'">
+            <mat-icon>forward</mat-icon>
+            {{ row.forwarded_to_admin ? 'Forwarded' : 'Forward' }}
+          </button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="replyReport(row); $event.stopPropagation()"
+            style="margin-left: 8px;">
+            <mat-icon>reply</mat-icon>
+            Reply
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Table Rows -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row
+          *matRowDef="let row; columns: displayedColumns;"
+          (click)="viewReportDetails(row)"
+          class="clickable-row"
+          @rowAnimation>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

@@ -1,0 +1,48 @@
+<mat-dialog-content class="table-container" @popupAnimation>
+  <div class="header-container">
+    <h2 class="table-title">Reporting History</h2>
+    <div class="search-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Seach Report</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search booking">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+    <button class="close-btn" (click)="closeReportHistoryDialog()">✖</button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table">
+    <thead>
+      <tr mat-header-row *matHeaderRowDef="['report_id', 'space_name', 'description', 'created_at']"></tr>
+    </thead>
+    <tbody>
+      <ng-container matColumnDef="report_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> USERNAME</th>
+        <td mat-cell *matCellDef="let booking"> {{ booking.report_id }} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="space_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> OPENSPACE</th>
+        <td mat-cell *matCellDef="let booking"> {{ booking.space_name }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>DISCRIPTIONS</th>
+        <td mat-cell *matCellDef="let booking"> {{ booking.description }} </td>
+      </ng-container>
+
+
+      <!-- Confirmed Time Column -->
+      <ng-container matColumnDef="created_at">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> DATE</th>
+        <td mat-cell *matCellDef="let booking"> {{ booking.created_at }} </td>
+      </ng-container>
+
+      <tr mat-row *matRowDef="let row; columns: ['report_id', 'space_name', 'description', 'created_at'];" @rowAnimation></tr>
+    </tbody>
+  </table>
+
+  <!-- Paginator -->
+  <mat-paginator #paginator [pageSizeOptions]="[4, 8, 16]" showFirstLastButtons></mat-paginator>
+</mat-dialog-content>

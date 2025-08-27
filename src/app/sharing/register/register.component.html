@@ -1,0 +1,65 @@
+<div class="register-background">
+  <div class="register-overlay">
+    <div *ngIf="showForm" class="register-container" @rotateFade (click)="$event.stopPropagation()">
+      <img src="assets/images/emblem.png" alt="Logo" class="login-logo">
+      <p class="country-name">United Republic of Tanzania</p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <!-- Username + Email -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width custom-input">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" placeholder="Enter Username" type="text" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width custom-input">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" placeholder="Enter Email" type="email" required>
+          </mat-form-field>
+        </div>
+
+        <!-- Password + Confirm Password -->
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="half-width custom-input">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Enter Password" required>
+            <button mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Toggle password visibility'"
+              [attr.aria-pressed]="!hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="half-width custom-input">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="passwordConfirm" placeholder="Confirm Password" required>
+            <button mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Toggle password visibility'"
+              [attr.aria-pressed]="!hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+
+        <div class="actions">
+          <button mat-raised-button color="primary" class="register-btn">Register</button>
+        </div>
+      </form>
+
+      <div class="login-link">
+        <p>Already have an account? <a routerLink="/login">Login</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button mat-fab color="accent" class="back-button" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+<app-footer></app-footer>

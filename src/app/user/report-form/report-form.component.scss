@@ -1,0 +1,108 @@
+/* Full-width form fields */
+.full-width {
+  width: 100%;
+}
+
+/* Input styling */
+.custom-input {
+  margin-bottom: 15px;
+}
+
+/* Modal background overlay */
+.report-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Report form container */
+.report-overlay {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  position: relative;
+  width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Center form elements */
+.report-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  font-size: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+
+/* Submit button */
+.actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.actions button {
+  width: 100%;
+}
+
+/* Increase the width of the file input container */
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Make it full-width */
+  margin-bottom: 15px;
+}
+
+/* File input label */
+.file-upload-label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* File input styling */
+#file-upload {
+  width: 100%; /* Increase width */
+  border: none;
+  background-color: transparent; /* Remove background */
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* File input wrapper for better visibility */
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc; /* Light border for visibility */
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* File name display */
+.file-name {
+  font-size: 10px;
+  color: #333;
+  margin-left: 10px;
+}
+
+

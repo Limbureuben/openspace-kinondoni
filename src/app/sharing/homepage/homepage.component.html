@@ -1,0 +1,30 @@
+<app-header/>
+<div class="container">
+  <h2 class="title">Huduma Zetu</h2>
+  <p class="description">
+    Chagua huduma hapa chini ili kuendelea. Chagua <strong>Ripoti</strong> kutoa taarifa kuhusu matumizi yasiyo ya kawaida ya eneo wazi, au
+    chagua <strong>Weka Nafasi</strong> kuhifadhi eneo kwa ajili ya tukio katika Halmashauri ya Manispaa ya Kinondoni.
+  </p>
+
+  <div class="cards-wrapper">
+    <mat-card class="card" (click)="goToReport()">
+      <div class="icon-wrapper">
+        <mat-icon class="card-icon" color="warn">report</mat-icon>
+      </div>
+      <mat-card-title>Ripoti Tatizo la Eneo Wazi</mat-card-title>
+      <mat-card-content>
+        <p>Saidia kulinda mazingira yetu kwa kuripoti matumizi mabaya au shughuli zisizo halali.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card" (click)="goToBook()">
+      <div class="icon-wrapper">
+        <mat-icon class="card-icon" color="primary">event</mat-icon>
+      </div>
+      <mat-card-title>Weka Nafasi ya Eneo Wazi</mat-card-title>
+      <mat-card-content>
+        <p>Hifadhi maeneo wazi yaliyopo kwa ajili ya matukio yako kwa urahisi na haraka.</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

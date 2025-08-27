@@ -1,0 +1,20 @@
+.calendar-container {
+  padding: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.calendar-container .fc {
+  height: 500px !important; /* Match the calendarOptions height */
+  overflow: hidden !important; /* Prevent scrollbars */
+}
+
+
+.fc-tooltip {
+  font-size: 14px;
+  background-color: #000;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}

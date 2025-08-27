@@ -1,0 +1,212 @@
+.table-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(100, 100, 177);
+  min-height: 490px; /* Set a minimum height to maintain sidebar height */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(100, 100, 177);
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-field {
+  width: 300px;
+}
+
+.custom-table {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.mat-header-cell {
+  background-color: #3f51b5; /* Blue color for the header */
+  color: white;
+  font-weight: bold;
+}
+
+.mat-header-row {
+  background-color: #3f51b5; /* Blue color for the header */
+}
+
+.mat-cell {
+  background-color: white;
+}
+
+.active {
+  color: green;
+}
+
+.inactive {
+  color: red;
+}
+
+.confirmed-icon {
+  color: green;
+}
+
+.mat-paginator {
+  margin-top: 20px;
+}
+
+
+
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-accepted {
+  color: green;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: red;
+  font-weight: bold;
+}
+
+/* Status Badge Styles */
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  min-width: 70px;
+  text-align: center;
+}
+
+.status-badge.forwarded {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+  border: 1px solid #4caf50;
+}
+
+.status-badge.pending {
+  background-color: #fff3e0;
+  color: #f57c00;
+  border: 1px solid #ff9800;
+}
+
+/* Action Button Styles */
+.mat-raised-button {
+  margin-right: 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: none;
+  min-width: 100px;
+}
+
+.mat-raised-button[disabled] {
+  background-color: #e0e0e0 !important;
+  color: #9e9e9e !important;
+  cursor: not-allowed;
+}
+
+.mat-raised-button mat-icon {
+  margin-right: 4px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Table Row Hover Effect */
+.mat-row:hover {
+  background-color: #f5f5f5;
+  transition: background-color 0.2s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .search-field {
+    width: 100%;
+  }
+
+  .table-title {
+    font-size: 20px;
+  }
+
+  .mat-raised-button {
+    min-width: 80px;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .status-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    min-width: 60px;
+  }
+}
+
+/* Table Wrapper for Horizontal Scroll */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+/* Loading State */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* No Message Text Styling */
+.no-message-text {
+  color: #9e9e9e;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* SweetAlert Custom Styling */
+:host ::ng-deep .swal2-html-container {
+  text-align: center !important;
+}
+
+:host ::ng-deep .swal2-html-container p {
+  margin-bottom: 10px !important;
+}
+
+:host ::ng-deep .swal2-html-container em {
+  color: #666;
+  font-style: italic;
+}
+
+:host ::ng-deep .swal2-html-container strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: #f5f5f5; /* subtle highlight */
+}

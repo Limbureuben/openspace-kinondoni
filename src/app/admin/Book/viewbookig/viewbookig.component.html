@@ -1,0 +1,37 @@
+<div class="report-background" @fadeInOut>
+  <div class="report-overlay" (click)="closePopup()">
+    <div class="report-container" (click)="$event.stopPropagation()" @fadeScale>
+      <button class="close-btn" (click)="closePopup()">×</button>
+      <h2 class="report-title">Maelezo ya Booking</h2>
+      <div class="report-content">
+        <div class="report-detail">
+          <strong>Eneo:</strong>
+          <span>{{ selectedReport?.space_name }}</span>
+        </div>
+        <div class="report-detail">
+          <strong>Jina la Mtumiaji:</strong>
+          <span>{{ selectedReport?.username }}</span>
+        </div>
+        <div class="report-detail">
+          <strong>Mawasiliano:</strong>
+          <span>{{ selectedReport?.contact }}</span>
+        </div>
+        <div class="report-detail">
+          <strong>Madhumuni:</strong>
+          <p class="description-box">{{ selectedReport?.purpose }}</p>
+        </div>
+        <div class="report-detail">
+          <strong>Wilaya:</strong>
+          <span>{{ selectedReport?.district }}</span>
+        </div>
+        <div class="report-detail" *ngIf="selectedReport?.file">
+          <strong>Faili Iliyo Pakuliwa:</strong>
+          <a [href]="getFullFileUrl(selectedReport.file)" target="_blank" download>Pakua</a>
+        </div>
+      </div>
+      <div class="actions">
+        <button mat-raised-button style="background-color: #3F51B5; color: white;" (click)="closePopup()">Funga</button>
+      </div>
+    </div>
+  </div>
+</div>

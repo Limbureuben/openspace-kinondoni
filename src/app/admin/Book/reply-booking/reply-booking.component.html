@@ -1,0 +1,19 @@
+
+<h2 mat-dialog-title>Tuma Ujumbe</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="replyForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ujumbe</mat-label>
+      <textarea matInput rows="4" formControlName="message" placeholder="Andika ujumbe wako hapa"></textarea>
+      <mat-error *ngIf="replyForm.get('message')?.hasError('required')">
+        Tafadhali andika ujumbe.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Ghairi</button>
+  <button mat-flat-button color="primary" (click)="sendReply()" [disabled]="replyForm.invalid">Tuma</button>
+</mat-dialog-actions>

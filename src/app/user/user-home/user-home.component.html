@@ -1,0 +1,56 @@
+<header class="header">
+  <div class="logo">
+    <img src="assets/images/logo.png" alt="Logo">
+  </div>
+
+  <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+  <div class="title">
+    WEB-GIS SYSTEM FOR MANAGEMENT OF OPEN SPACES IN KINONDONI MUNICIPALITY
+  </div>
+
+  <!-- Theme Toggle Button -->
+  <button
+    class="theme-toggle"
+    (click)="toggleTheme()"
+    [attr.aria-label]="isDarkTheme ? 'Switch to light theme' : 'Switch to dark theme'"
+    title="Toggle Theme">
+    <mat-icon>{{ isDarkTheme ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</header>
+
+<div class="container">
+  <h2>Services</h2>
+  <p class="description">
+    Select a service below to continue: Choose Open Spaces to report unusual environmental activities,
+    or choose Reserve Open Space to book an area for activities based on its cost within Kinondoni Municipality. Thank you.
+  </p>
+
+  <div class="cards-wrapper">
+    <mat-card class="card" (click)="openPopup()">
+      <img src="assets/images/location.png" alt="Open Space" class="icon">
+      <mat-card-content>
+        <p>Report & Reserve Open Space</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card" (click)="openReportHistoryDialog()">
+      <img src="assets/images/seo-report.png" alt="Report History" class="icon">
+      <mat-card-title>Report History</mat-card-title>
+    </mat-card>
+  </div>
+</div>
+
+<div class="popup-overlay" *ngIf="showPopup">
+  <div class="popup-card">
+    <button class="close-btn" (click)="closePopup()">×</button>
+    <h3>Select Option</h3>
+    <p>Continue by creating an account or proceed as a guest user.</p>
+    <div class="popup-buttons">
+      <button class="popup-btn create-account" (click)="navigateToLogin()">Login</button>
+      <button class="popup-btn anonymous" (click)="continueAsAnonymous()">Guest User</button>
+    </div>
+  </div>
+</div>
+
+<div #chatbotContainer class="elfsight-app-dfc68b9e-bb1a-4060-a57a-bf22802f801e" data-elfsight-app-lazy style="display: none;"></div>

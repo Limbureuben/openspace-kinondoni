@@ -1,0 +1,40 @@
+<mat-toolbar class="heading">
+  <button mat-icon-button>
+    <mat-icon>brightness_6</mat-icon> <!-- Theme Toggle -->
+  </button>
+
+  <!-- Profile Icon (Left) with Dropdown Menu -->
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="NavigateToDashboard()">
+      <mat-icon>dashboard</mat-icon>Dashboard
+    </button>
+    <button mat-menu-item (click)="NavigateToOpenspace()">
+      <mat-icon>person</mat-icon> Available Openspace
+    </button>
+    <button mat-menu-item (click)="openReportHistoryDialog()">
+      <mat-icon>history</mat-icon>My Bookings
+    </button>
+    <button mat-menu-item (click)="NavigateToCalender()">
+      <mat-icon>assignment</mat-icon>Calendar
+    </button>
+    <button mat-menu-item (click)="NavigateBack()">
+      <mat-icon>arrow_back</mat-icon> Back
+    </button>
+    <button mat-menu-item (click)="NavigateToLogout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+    <mat-icon class="profile-icon">account_circle</mat-icon>
+  </button>
+
+  <span class="title">KINONDONI MUNICIPAL</span>
+<button mat-icon-button 
+        [matBadge]="unreadCount" 
+        matBadgeColor="warn" 
+        [matBadgeHidden]="unreadCount === 0" 
+        (click)="openNotificationDialog()">
+  <mat-icon class="profile-icon">notifications</mat-icon>
+</button>
+</mat-toolbar>

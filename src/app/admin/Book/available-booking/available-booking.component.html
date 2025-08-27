@@ -1,0 +1,246 @@
+<div class="modern-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">
+          <mat-icon class="title-icon">event_available</mat-icon>
+          Booking Management
+        </h1>
+        <p class="page-subtitle">Manage space reservations and booking requests from users</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ dataSource.data.length }}</span>
+          <span class="stat-label">Total Bookings</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getPendingBookingsCount() }}</span>
+          <span class="stat-label">Pending</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getAcceptedBookingsCount() }}</span>
+          <span class="stat-label">Accepted</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getRejectedBookingsCount() }}</span>
+          <span class="stat-label">Rejected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls Section -->
+  <mat-card class="controls-card">
+    <div class="controls-header">
+      <div class="controls-left">
+        <h3 class="controls-title">Filter & Search Bookings</h3>
+        <p class="controls-subtitle">Find specific bookings by user, space, or status</p>
+      </div>
+      <div class="controls-right">
+        <button mat-raised-button color="primary" class="bulk-action-btn">
+          <mat-icon>done_all</mat-icon>
+          Bulk Actions
+        </button>
+      </div>
+    </div>
+
+    <div class="search-controls">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search bookings</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by username, space name, or status...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by Status</mat-label>
+        <mat-select (selectionChange)="filterByStatus($event.value)">
+          <mat-option value="all">All Bookings</mat-option>
+          <mat-option value="pending">Pending Only</mat-option>
+          <mat-option value="accepted">Accepted Only</mat-option>
+          <mat-option value="rejected">Rejected Only</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by Space</mat-label>
+        <mat-select (selectionChange)="filterBySpace($event.value)">
+          <mat-option value="all">All Spaces</mat-option>
+          <mat-option *ngFor="let space of getUniqueSpaces()" [value]="space">
+            {{ space }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>place</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- Data Table -->
+  <mat-card class="table-card">
+    <div class="table-header">
+      <div class="table-info">
+        <h3 class="table-title">Booking Requests</h3>
+        <p class="table-subtitle">{{ dataSource.data.length }} booking requests found</p>
+      </div>
+      <div class="table-actions">
+        <button mat-icon-button class="refresh-btn" (click)="refreshData()" title="Refresh Bookings">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button class="calendar-btn" title="Calendar View">
+          <mat-icon>calendar_today</mat-icon>
+        </button>
+        <button mat-icon-button class="export-btn" title="Export Bookings">
+          <mat-icon>download</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="modern-table" @tableEnterAnimation>
+
+        <!-- Space Name Column -->
+        <ng-container matColumnDef="space_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>place</mat-icon>
+              <span>Open Space</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="space-cell">
+              <div class="space-icon">
+                <mat-icon>landscape</mat-icon>
+              </div>
+              <div class="space-info">
+                <div class="primary-text">{{ row.space_name }}</div>
+                <div class="secondary-text">Public Space</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>person</mat-icon>
+              <span>User</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="user-cell">
+              <div class="user-avatar">
+                <mat-icon>account_circle</mat-icon>
+              </div>
+              <div class="user-info">
+                <div class="primary-text">{{ row.username }}</div>
+                <div class="secondary-text">Booking Requester</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>info</mat-icon>
+              <span>Status</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="status-badge" [ngClass]="getStatusClass(row.status)">
+              <mat-icon>{{ getStatusIcon(row.status) }}</mat-icon>
+              <span>{{ getStatusText(row.status) }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <span>Actions</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="action-buttons">
+              <!-- View Button -->
+              <button mat-icon-button
+                      class="action-btn view-btn"
+                      (click)="viewReport(row); $event.stopPropagation()"
+                      title="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              <!-- Accept Button -->
+              <button mat-icon-button
+                      class="action-btn accept-btn"
+                      (click)="acceptNewBooking(row); $event.stopPropagation()"
+                      [disabled]="row.status === 'accepted' || row.status === 'rejected'"
+                      [title]="getAcceptButtonTitle(row.status)">
+                <mat-icon>{{ row.status === 'accepted' ? 'check_circle' : 'check' }}</mat-icon>
+              </button>
+
+              <!-- Reject Button -->
+              <button mat-icon-button
+                      class="action-btn reject-btn"
+                      (click)="rejectBooking(row); $event.stopPropagation()"
+                      [disabled]="row.status === 'rejected' || row.status === 'accepted'"
+                      [title]="getRejectButtonTitle(row.status)">
+                <mat-icon>{{ row.status === 'rejected' ? 'cancel' : 'close' }}</mat-icon>
+              </button>
+
+              <!-- Reply Button (only for rejected) -->
+              <button mat-icon-button
+                      class="action-btn reply-btn"
+                      *ngIf="row.status === 'rejected'"
+                      (click)="openReplyDialog(row); $event.stopPropagation()"
+                      title="Reply to User">
+                <mat-icon>reply</mat-icon>
+              </button>
+
+              <!-- Delete Button -->
+              <button mat-icon-button
+                      class="action-btn delete-btn"
+                      (click)="deleteBooking(row); $event.stopPropagation()"
+                      [disabled]="row.status === 'pending'"
+                      [title]="getDeleteButtonTitle(row.status)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="table-row clickable-row"
+            (click)="viewReport(row)"
+            @rowAnimation
+            title="Click to view booking details"></tr>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="dataSource.data.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">event_available</mat-icon>
+        <h3>No Bookings Found</h3>
+        <p>No booking requests match your current search criteria.</p>
+        <button mat-raised-button color="primary" class="refresh-empty-btn" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+          Refresh Bookings
+        </button>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <mat-paginator #paginator
+                     [pageSizeOptions]="[5, 10, 20, 50]"
+                     [pageSize]="10"
+                     showFirstLastButtons
+                     class="modern-paginator">
+      </mat-paginator>
+    </div>
+  </mat-card>
+</div>

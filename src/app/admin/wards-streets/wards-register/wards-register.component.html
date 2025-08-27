@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Register New Ward</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="wardForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ward Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter ward name">
+      <mat-error *ngIf="wardForm.get('name')?.hasError('required')">
+        Ward name is required
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="wardForm.invalid || isSubmitting">
+    <mat-icon>save</mat-icon>
+    <span *ngIf="!isSubmitting">Register</span>
+    <span *ngIf="isSubmitting">Registering...</span>
+  </button>
+</mat-dialog-actions>

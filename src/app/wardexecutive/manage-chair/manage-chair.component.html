@@ -1,0 +1,59 @@
+<div class="table-container">
+  <div class="header-container">
+    <h2 class="table-title">REGISTRED STREET LEADERS</h2>
+    <div>
+      <!-- Tuma Arifa Kwa Wasimamizi Wote -->
+      <button mat-icon-button color="accent" (click)="sendNotificationToAllAdmins()" matTooltip="Tuma Arifa Kwa Wasimamizi Wote">
+        <mat-icon>notifications_active</mat-icon>
+      </button>
+
+      <!-- Sajili Afisa Mpya wa Kata -->
+      <button mat-icon-button color="primary" (click)="openRegisterForm()" matTooltip="Ongeza Afisa wa Kata">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 custom-table" @tableEnterAnimation>
+      <tbody>
+
+        <!-- Kata -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>NAME</th>
+          <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+        </ng-container>
+
+        <!-- Barua Pepe -->
+        <ng-container matColumnDef="street">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>STREET NAME</th>
+          <td mat-cell *matCellDef="let user">{{ user.street?.name || 'N/A' }}</td>
+        </ng-container>
+
+        <!-- Vitendo -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>ACTION</th>
+          <td mat-cell *matCellDef="let user">
+            <div class="action-buttons">
+
+              <!-- Badilisha Hali (Anzisha/Kuzima) -->
+              <button mat-button class="status-btn" [ngStyle]="{'color': user.isActive ? 'red' : 'green'}" (click)="toggleStatus(user)">
+                {{ user.isActive ? 'Activate' : 'active' }}
+              </button>
+
+              <!-- Tuma Arifa Kwa Afisa wa Kata Mmoja -->
+              <button mat-icon-button color="primary" (click)="sendNotificationToUser(user)" matTooltip="Send Notification">
+                <mat-icon>notifications</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['username', 'street', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['username','street', 'actions'];" @rowAnimation></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Kipanga Kurasa -->
+  <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

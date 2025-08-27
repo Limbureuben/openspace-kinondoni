@@ -1,0 +1,25 @@
+<div class="profile-dialog" [@dialogFadeIn]>
+  <div *ngIf="user" class="profile-info">
+
+    <!-- Profile Image Section -->
+    <div class="profile-image-container" (click)="triggerFileInput()">
+      <img
+        [src]="user.profileImageUrl || defaultProfileImage"
+        alt="Profile Image"
+        width="100"
+        height="100"
+        class="profile-image"
+      />
+      <input #fileInput type="file" hidden (change)="onFileSelected($event)" accept="image/*">
+    </div>
+
+    <!-- Username & Email -->
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-raised-button style="color: white; background-color: rgb(100, 100, 177);" (click)="closeDialog()">Close</button>
+    <button mat-raised-button color="warn" (click)="resetPassword()">Reset Password</button>
+  </div>
+</div>

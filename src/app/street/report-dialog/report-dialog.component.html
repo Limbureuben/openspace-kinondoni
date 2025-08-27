@@ -1,0 +1,94 @@
+
+
+<div class="report-background" @fadeInOut>
+  <div class="report-overlay" (click)="closeForm()">
+    <div class="report-container" (click)="$event.stopPropagation()" @fadeScale>
+      <button class="close-btn" (click)="closeForm()">×</button>
+
+      <h2 class="report-title">Report Data</h2>
+
+      <div class="report-content">
+        <!-- Report ID -->
+        <div class="report-detail">
+          <strong>Report ID:</strong>
+          <span>{{ data.report_id }}</span>
+        </div>
+
+        <!-- Openspace Name -->
+        <div class="report-detail">
+          <strong>Openspace Name:</strong>
+          <span>{{ data.space_name }}</span>
+        </div>
+
+
+
+        <!-- Description -->
+        <div class="report-detail">
+          <strong>Report Description:</strong>
+          <p class="description-box">{{ data.description }}</p>
+        </div>
+
+        <!-- Email -->
+        <div class="report-detail">
+          <strong>Email:</strong>
+          <span>{{ data.email || 'Not provided' }}</span>
+        </div>
+
+        <!-- Location -->
+        <div class="report-detail" *ngIf="data.latitude && data.longitude">
+          <strong>Location:</strong>
+          <span>
+            Lat: {{ data.latitude }}, Lng: {{ data.longitude }}
+            <mat-icon
+              style="cursor: pointer; color: #1976d2; margin-left: 5px;"
+              (click)="openMapDirections(data.latitude, data.longitude)">
+              location_on
+            </mat-icon>
+          </span>
+        </div>
+        <div class="report-detail" *ngIf="!data.latitude || !data.longitude">
+          <strong>Location:</strong> <span>Not provided</span>
+        </div>
+
+
+        <!-- Uploaded File -->
+        <div class="report-detail" *ngIf="data.file">
+          <strong>File Uploaded:</strong>
+          <ng-container *ngIf="isVideoFile(getFileUrl()); else imageTemplate">
+            <video width="200" controls (click)="openMediaModal(getFileUrl())">
+              <source [src]="getFileUrl()" type="video/mp4">
+              Your browser does not support this video.
+            </video>
+          </ng-container>
+
+          <ng-template #imageTemplate>
+            <img [src]="getFileUrl()" (click)="openMediaModal(getFileUrl())" class="thumbnail" alt="Uploaded File">
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Media Modal -->
+      <div class="media-modal" *ngIf="isMediaModalOpen" (click)="closeMediaModal()" @fadeInOut>
+        <div class="media-container" (click)="$event.stopPropagation()">
+          <button class="close-btn" (click)="closeMediaModal()">×</button>
+
+          <ng-container *ngIf="isVideo; else imageView">
+            <video controls class="full-video">
+              <source [src]="selectedMedia" type="video/mp4">
+              Your browser does not support this video.
+            </video>
+          </ng-container>
+
+          <ng-template #imageView>
+            <img [src]="selectedMedia" class="full-image" alt="Full View">
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Close Button -->
+      <div class="actions">
+        <button mat-raised-button style="background-color: #3F51B5; color: white;" (click)="closeForm()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

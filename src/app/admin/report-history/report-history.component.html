@@ -1,0 +1,266 @@
+
+<div class="modern-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">
+          <mat-icon class="title-icon">history</mat-icon>
+          Report History
+        </h1>
+        <p class="page-subtitle">View and track all processed reports and their completion status</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ dataSource.data.length }}</span>
+          <span class="stat-label">Total Records</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getCompletedReportsCount() }}</span>
+          <span class="stat-label">Completed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getRecentHistoryCount() }}</span>
+          <span class="stat-label">This Month</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls Section -->
+  <mat-card class="controls-card">
+    <div class="controls-header">
+      <div class="controls-left">
+        <h3 class="controls-title">Search & Filter History</h3>
+        <p class="controls-subtitle">Find specific reports by description or date range</p>
+      </div>
+      <div class="controls-right">
+        <button mat-raised-button color="accent" class="export-btn">
+          <mat-icon>file_download</mat-icon>
+          Export History
+        </button>
+      </div>
+    </div>
+
+    <div class="search-controls">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search report history</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by report ID, description, or date...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by Date Range</mat-label>
+        <mat-select (selectionChange)="filterByDateRange($event.value)">
+          <mat-option value="all">All Time</mat-option>
+          <mat-option value="today">Today</mat-option>
+          <mat-option value="week">This Week</mat-option>
+          <mat-option value="month">This Month</mat-option>
+          <mat-option value="quarter">This Quarter</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>date_range</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Sort by</mat-label>
+        <mat-select (selectionChange)="sortBy($event.value)">
+          <mat-option value="newest">Newest First</mat-option>
+          <mat-option value="oldest">Oldest First</mat-option>
+          <mat-option value="reportId">Report ID</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>sort</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- Data Table -->
+  <mat-card class="table-card">
+    <div class="table-header">
+      <div class="table-info">
+        <h3 class="table-title">Report History Archive</h3>
+        <p class="table-subtitle">{{ dataSource.data.length }} historical records found</p>
+      </div>
+      <div class="table-actions">
+        <button mat-icon-button class="refresh-btn" (click)="refreshData()" title="Refresh History">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button class="archive-btn" title="Archive Settings">
+          <mat-icon>archive</mat-icon>
+        </button>
+        <button mat-icon-button class="print-btn" title="Print History">
+          <mat-icon>print</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="modern-table" @tableEnterAnimation>
+
+        <!-- Report ID Column -->
+        <ng-container matColumnDef="reportId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>tag</mat-icon>
+              <span>Report ID</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="cell-content">
+              <div class="primary-text">#{{ report.reportId }}</div>
+              <div class="secondary-text">Historical Record</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>description</mat-icon>
+              <span>Report Description</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="description-cell">
+              <div class="description-text" [title]="report.description">
+                {{ getShortDescription(report.description) }}
+              </div>
+              <button *ngIf="report.description && report.description.length > 60"
+                      mat-icon-button
+                      class="expand-btn"
+                      (click)="showFullDescription(report)"
+                      title="View full description">
+                <mat-icon>expand_more</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Created At Column -->
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>schedule</mat-icon>
+              <span>Completion Date</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="date-cell">
+              <div class="date-info">
+                <div class="primary-text">{{ formatDate(report.createdAt) }}</div>
+                <div class="secondary-text">{{ getTimeAgo(report.createdAt) }}</div>
+              </div>
+              <div class="date-icon">
+                <mat-icon>event</mat-icon>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <mat-icon>verified</mat-icon>
+              <span>Status</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="status-badge completed">
+              <mat-icon>check_circle</mat-icon>
+              <span>Completed</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <span>Actions</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="action-buttons">
+              <button mat-icon-button
+                      class="action-btn view-btn"
+                      (click)="viewReportDetails(report); $event.stopPropagation()"
+                      title="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              <button mat-icon-button
+                      class="action-btn download-btn"
+                      (click)="downloadReport(report); $event.stopPropagation()"
+                      title="Download Report">
+                <mat-icon>download</mat-icon>
+              </button>
+
+              <button mat-icon-button
+                      class="action-btn share-btn"
+                      title="Share Report">
+                <mat-icon>share</mat-icon>
+              </button>
+
+              <button mat-icon-button
+                      class="action-btn more-btn"
+                      [matMenuTriggerFor]="historyMenu"
+                      title="More Options">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <!-- History Menu -->
+              <mat-menu #historyMenu="matMenu">
+                <button mat-menu-item (click)="viewTimeline(report)">
+                  <mat-icon>timeline</mat-icon>
+                  <span>View Timeline</span>
+                </button>
+                <button mat-menu-item (click)="duplicateReport(report)">
+                  <mat-icon>content_copy</mat-icon>
+                  <span>Duplicate Report</span>
+                </button>
+                <button mat-menu-item (click)="exportToPDF(report)">
+                  <mat-icon>picture_as_pdf</mat-icon>
+                  <span>Export to PDF</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="archiveReport(report)" class="archive-action">
+                  <mat-icon>archive</mat-icon>
+                  <span>Archive Report</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="table-row clickable-row"
+            (click)="viewReportDetails(row)"
+            @rowAnimation
+            title="Click to view report details"></tr>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="dataSource.data.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">history</mat-icon>
+        <h3>No Report History Found</h3>
+        <p>No historical reports match your current search criteria.</p>
+        <button mat-raised-button color="primary" class="refresh-empty-btn" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+          Refresh History
+        </button>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <mat-paginator #paginator
+                     [pageSizeOptions]="[5, 10, 20, 50]"
+                     [pageSize]="10"
+                     showFirstLastButtons
+                     class="modern-paginator">
+      </mat-paginator>
+    </div>
+  </mat-card>
+</div>

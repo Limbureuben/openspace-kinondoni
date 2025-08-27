@@ -1,0 +1,212 @@
+<div class="modern-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">
+          <mat-icon class="title-icon">landscape</mat-icon>
+          Open Spaces Management
+        </h1>
+        <p class="page-subtitle">Manage and monitor all open spaces in the system</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ dataSource.data.length }}</span>
+          <span class="stat-label">Total Spaces</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getActiveSpacesCount() }}</span>
+          <span class="stat-label">Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls Section -->
+  <mat-card class="controls-card">
+    <div class="controls-header">
+      <div class="controls-left">
+        <h3 class="controls-title">Filter & Search</h3>
+        <p class="controls-subtitle">Find specific open spaces</p>
+      </div>
+      <div class="controls-right">
+        <button mat-raised-button color="primary" class="add-btn">
+          <mat-icon>add</mat-icon>
+          Add New Space
+        </button>
+      </div>
+    </div>
+
+    <div class="search-controls">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search open spaces</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by name or district...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by Status</mat-label>
+        <mat-select (selectionChange)="filterByStatus($event.value)">
+          <mat-option value="all">All Spaces</mat-option>
+          <mat-option value="active">Active Only</mat-option>
+          <mat-option value="inactive">Inactive Only</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- Data Table -->
+  <mat-card class="table-card">
+    <div class="table-header">
+      <div class="table-info">
+        <h3 class="table-title">Open Spaces Directory</h3>
+        <p class="table-subtitle">{{ dataSource.data.length }} spaces found</p>
+      </div>
+      <div class="table-actions">
+        <button mat-icon-button class="refresh-btn" (click)="refreshData()" title="Refresh Data">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button class="export-btn" title="Export Data">
+          <mat-icon>download</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="modern-table" @tableEnterAnimation>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>location_on</mat-icon>
+              <span>Open Space</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let space">
+            <div class="cell-content">
+              <div class="primary-text">{{ space.name }}</div>
+              <div class="secondary-text">ID: {{ space.id }}</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- District Column -->
+        <ng-container matColumnDef="district">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>place</mat-icon>
+              <span>District</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let space">
+            <div class="cell-content">
+              <div class="primary-text">{{ space.district }}</div>
+              <div class="secondary-text">Region</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Coordinates Column -->
+        <ng-container matColumnDef="coordinates">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <mat-icon>my_location</mat-icon>
+              <span>Coordinates</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let space">
+            <div class="coordinates-cell">
+              <div class="coordinate-item">
+                <span class="coord-label">Lat:</span>
+                <span class="coord-value">{{ space.latitude | number:'1.6-6' }}</span>
+              </div>
+              <div class="coordinate-item">
+                <span class="coord-label">Lng:</span>
+                <span class="coord-value">{{ space.longitude | number:'1.6-6' }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="isActive">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <mat-icon>info</mat-icon>
+              <span>Status</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let space">
+            <div class="status-badge" [ngClass]="space.isActive ? 'active' : 'inactive'">
+              <mat-icon>{{ space.isActive ? 'check_circle' : 'cancel' }}</mat-icon>
+              <span>{{ space.isActive ? 'Active' : 'Inactive' }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <span>Actions</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let space">
+            <div class="action-buttons">
+              <button mat-icon-button class="action-btn view-btn" title="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button class="action-btn edit-btn" title="Edit Space">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="action-btn location-btn" title="View on Map">
+                <mat-icon>map</mat-icon>
+              </button>
+              <button mat-icon-button
+                      class="action-btn toggle-btn"
+                      [ngClass]="space.isActive ? 'deactivate' : 'activate'"
+                      (click)="toggleStatus(space)"
+                      [title]="space.isActive ? 'Deactivate' : 'Activate'">
+                <mat-icon>{{ space.isActive ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+              </button>
+              <button mat-icon-button
+                      class="action-btn delete-btn"
+                      (click)="deleteOpenSpaceWithConfirmation(space.id)"
+                      title="Delete Space">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="table-row"
+            @rowAnimation></tr>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="dataSource.data.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">landscape</mat-icon>
+        <h3>No Open Spaces Found</h3>
+        <p>No open spaces match your current search criteria.</p>
+        <button mat-raised-button color="primary" class="add-first-btn">
+          <mat-icon>add</mat-icon>
+          Add First Space
+        </button>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <mat-paginator #paginator
+                     [pageSizeOptions]="[5, 10, 20, 50]"
+                     [pageSize]="10"
+                     showFirstLastButtons
+                     class="modern-paginator">
+      </mat-paginator>
+    </div>
+  </mat-card>
+</div>

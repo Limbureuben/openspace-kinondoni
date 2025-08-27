@@ -1,0 +1,105 @@
+<app-booking-header />
+<div class="map-wrap">
+  <!-- Map Style Toggle -->
+  <div class="map-style-toggle">
+    <select #styleSelect (change)="changeMapStyle(styleSelect.value)">
+      <option value="streets">Street</option>
+      <option value="hybrid">Satellite</option>
+      <option value="topo">Topographic</option>
+      <option value="basic">Basic</option>
+    </select>
+  </div>
+
+  <!-- Search Box -->
+  <div class="search-box">
+    <input #searchInput type="text" placeholder="Search location..." [(ngModel)]="searchQuery" (input)="fetchSuggestions()">
+    <button (click)="searchLocation()">🔍</button>
+    <ul class="suggestions-list" *ngIf="suggestions.length">
+      <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+        {{ suggestion.name }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Map Container -->
+  <div class="map" #map></div>
+
+  <!-- Booking Form -->
+  <div class="report-background" id="detailsForm">
+    <div class="loading-overlay" *ngIf="submitting">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Submitting your booking...</p>
+  </div>
+    <div id="closeFormBtn" (click)="closeForm()">
+      <div class="report-container" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeForm()">×</button>
+        <h2 class="form-heading">Book Open Space</h2>
+        <form [formGroup]="reportForm" (ngSubmit)="submitBook()">
+          <!-- Username & Contact -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width custom-input">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="username" placeholder="Enter your username" required />
+              <mat-error *ngIf="reportForm.get('username')?.invalid && reportForm.get('username')?.touched">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width custom-input">
+              <mat-label>Contact</mat-label>
+              <input matInput formControlName="contact" placeholder="eg. 0625219727" required />
+              <mat-error *ngIf="reportForm.get('contact')?.invalid && reportForm.get('contact')?.touched">
+                Contact is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Date & Duration -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width custom-input">
+              <mat-label>Start Date</mat-label>
+              <input matInput formControlName="startdate" [matDatepicker]="picker1" placeholder="Select date" required />
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width custom-input">
+              <mat-label>End Date</mat-label>
+              <input matInput formControlName="enddate" [matDatepicker]="picker2" placeholder="Select date" required />
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+
+          <!-- Purpose & Ward -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width custom-input">
+              <mat-label>Purpose</mat-label>
+              <textarea matInput formControlName="purpose" placeholder="Enter the purpose" required></textarea>
+              <mat-error *ngIf="reportForm.get('purpose')?.invalid && reportForm.get('purpose')?.touched">
+                Purpose is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width custom-input">
+              <mat-label>Ward</mat-label>
+              <mat-select formControlName="district" required>
+                <mat-option *ngFor="let district of districts" [value]="district">{{ district }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="reportForm.get('district')?.invalid && reportForm.get('district')?.touched">
+                District is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="actions">
+           <button mat-raised-button color="accent" type="submit" [disabled]="submitting || !reportForm.valid || !selectedSpace">
+            {{ submitting ? 'Submitting...' : 'Submit Booking' }}
+          </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

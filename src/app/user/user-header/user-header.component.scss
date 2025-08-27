@@ -1,0 +1,36 @@
+mat-toolbar {
+  background-color: rgb(100, 100, 177) !important;
+  // background-color: white;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-icon {
+  color: white !important; /* Ensures the icon remains white */
+
+}
+
+
+.register-button {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #e64a19;
+}
+

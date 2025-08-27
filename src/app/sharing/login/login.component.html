@@ -1,0 +1,58 @@
+<div class="login-background">
+  <div class="login-overlay">
+    <div class="login-container" @rotateFade (click)="$event.stopPropagation()">
+      <img src="assets/images/emblem.png" alt="Logo" class="login-logo">
+      <p class="country-name">United Republic of Tanzania</p>
+
+      <form [formGroup]="LoginForm" (ngSubmit)="OnSubmit()">
+        <mat-form-field appearance="outline" class="full-width custom-input">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" placeholder="Enter your username" type="text" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width custom-input">
+          <mat-label>Password</mat-label>
+          <input matInput
+                [type]="hide ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="Enter your password"
+                required>
+          <button mat-icon-button
+                  matSuffix
+                  (click)="hide = !hide"
+                  [attr.aria-label]="'Toggle password visibility'"
+                  [attr.aria-pressed]="!hide">
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Forgot Password Link -->
+        <div class="forgot-password">
+          <a (click)="NavigateToReset()">Forgot Password?</a>
+        </div>
+
+        <div class="actions">
+          <button mat-raised-button color="primary" class="login-btn">Login</button>
+        </div>
+
+        <div class="or-separator">
+          <span>or use</span>
+        </div>
+      </form>
+
+      <div class="google-login" (click)="loginWithGoogle()">
+        <img src="assets/images/google.png" alt="Google" class="google-icon">
+      </div>
+
+      <div class="register-link">
+        <p>Don't have an account? <a routerLink="/register">Register</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button mat-fab color="accent" class="back-button" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</button>
+
+<app-footer></app-footer>

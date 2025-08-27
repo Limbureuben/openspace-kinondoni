@@ -1,0 +1,9 @@
+<app-booking-header></app-booking-header>
+
+<div *ngIf="calendarReady" class="calendar-container">
+  <full-calendar [options]="calendarOptions"></full-calendar>
+</div>
+
+<div *ngIf="!calendarReady">
+  Loading calendar...
+</div>

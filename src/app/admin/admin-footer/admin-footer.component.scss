@@ -1,0 +1,65 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+button {
+  margin: 0 10px;
+}
+
+mat-toolbar {
+  box-shadow: none; /* Remove any border */
+  background-color: rgba(249, 245, 245, 0.982);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure content is spaced properly */
+  flex-wrap: wrap; /* Allow wrapping for small screens */
+  padding: 0 20px; /* Add padding for better spacing */
+}
+
+.elfsight-app-dfc68b9e-bb1a-4060-a57a-bf22802f801e {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  mat-toolbar {
+    padding: 10px; /* Reduce padding for larger tablets */
+  }
+
+  button {
+    margin: 5px 5px; /* Reduce margin for buttons */
+  }
+}
+
+@media (max-width: 768px) {
+  mat-toolbar {
+    padding: 5px; /* Further reduce padding for mobile */
+  }
+
+  button {
+    margin: 5px 2px; /* Further reduce margin for buttons */
+    font-size: 0.9rem; /* Slightly smaller font size for buttons */
+  }
+
+  span {
+    font-size: 0.9rem; /* Slightly smaller font size for text */
+  }
+}
+
+@media (max-width: 480px) {
+  mat-toolbar {
+    padding: 2px; /* Further reduce padding for very small screens */
+  }
+
+  button {
+    margin: 2px 1px; /* Further reduce margin for buttons */
+    font-size: 0.8rem; /* Further reduce font size for buttons */
+  }
+
+  span {
+    font-size: 0.8rem; /* Further reduce font size for text */
+  }
+}

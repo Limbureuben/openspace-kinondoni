@@ -1,0 +1,38 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+// Define palettes for light theme
+$myapp-theme-primary: mat.m2-define-palette(mat.$m2-indigo-palette, A400, A100, A700);
+$myapp-theme-accent: mat.m2-define-palette(mat.$m2-indigo-palette);
+$myapp-theme-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// Define palettes for dark theme
+$myapp-dark-theme-primary: mat.m2-define-palette(mat.$m2-blue-palette, 200, 50, 400);
+$myapp-dark-theme-accent: mat.m2-define-palette(mat.$m2-amber-palette, A200, A100, A400);
+$myapp-dark-theme-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+// Create light theme
+$myapp-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $myapp-theme-primary,
+    accent: $myapp-theme-accent,
+    warn: $myapp-theme-warn,
+  )
+));
+
+// Create dark theme
+$myapp-dark-theme: mat.m2-define-dark-theme((
+  color: (
+    primary: $myapp-dark-theme-primary,
+    accent: $myapp-dark-theme-accent,
+    warn: $myapp-dark-theme-warn,
+  )
+));
+
+// Apply light theme by default
+@include mat.all-component-themes($myapp-theme);
+
+// Apply dark theme when dark-theme class is present
+.dark-theme {
+  @include mat.all-component-colors($myapp-dark-theme);
+}

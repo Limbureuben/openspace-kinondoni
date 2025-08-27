@@ -1,0 +1,175 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use 'theme/custom-theme' as *;
+
+body {
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Dark theme for Material components */
+body.dark-theme .mat-toolbar {
+  background-color: #1f1f1f !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .mat-card {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .mat-form-field {
+  color: #ffffff !important;
+}
+
+body.dark-theme .mat-form-field .mat-form-field-label {
+  color: #bbbbbb !important;
+}
+
+body.dark-theme .mat-input-element {
+  color: #ffffff !important;
+}
+
+body.dark-theme .mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: #555555 !important;
+}
+
+body.dark-theme .mat-button {
+  color: #ffffff !important;
+}
+
+body.dark-theme .mat-icon-button {
+  color: #ffffff !important;
+}
+
+/* Dark theme for custom components */
+body.dark-theme .header {
+  background: linear-gradient(90deg, #2c2c54, #1e3a8a) !important;
+}
+
+body.dark-theme .container {
+  background: linear-gradient(to right, #1a1a1a, #2d2d2d) !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .card {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+  border: 1px solid #444444;
+}
+
+body.dark-theme .popup-card {
+  background-color: #2d2d2d !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .close-btn {
+  color: #ffffff !important;
+}
+
+body.dark-theme .anonymous {
+  background-color: #444444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .anonymous:hover {
+  background-color: #555555 !important;
+}
+
+/* Theme toggle button styles */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+body.dark-theme .theme-toggle {
+  background-color: rgba(45, 45, 45, 0.9);
+  color: #ffffff;
+}
+
+body.dark-theme .theme-toggle:hover {
+  background-color: rgba(45, 45, 45, 1);
+}
+
+.theme-toggle mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+// @import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  border-color: lightseagreen !important;
+}
+
+.mat-input-element {
+  font-size: 16px !important;
+  padding: 12px !important;
+  color: #333 !important;
+}
+
+.mat-form-field-label {
+  color: lightseagreen !important;
+}
+
+/* Global Styles to target mat-form-field input in all components */
+/* Global styles for all mat-form-field inputs */
+.mat-form-field.custom-input input.ng-touched.ng-valid {
+  color: green !important;
+}
+
+.mat-form-field.custom-input input.ng-touched.ng-invalid {
+  color: red !important;
+}
+
+
+.swal2-actions {
+  display: flex;
+  justify-content: space-between; /* Distribute the buttons evenly */
+  gap: 20px; /* Adjust the gap between the buttons */
+}
+
+.swal2-confirm, .swal2-cancel {
+  padding: 10px 20px; /* Adjust the padding for the buttons if necessary */
+}
+
+
+// Style the success toast
+.toast-success {
+  background-color: white !important;
+  color: #4CAF50 !important;
+
+  .toast-progress {
+    background-color: #4CAF50 !important; // green progress bar
+  }
+}

@@ -1,0 +1,212 @@
+/* Background styling for the register form */
+.register-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://www.mof.go.tz/site/images/emblem.png');
+  background-size: 35%;
+  background-position: center top;
+  background-repeat: no-repeat;
+  height: calc(95vh - 15px); /* Adjust based on header & footer height */
+}
+
+/* Overlay to dim the background */
+.register-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+}
+
+/* Container for the register form */
+.register-container {
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  max-width: 550px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  min-height: 150px;
+  z-index: 1001;
+}
+
+/* Row layout for pairs of fields */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Input width styling */
+.half-width {
+  flex: 1 1 48%;
+  min-width: 140px;
+}
+
+/* Styling for the login logo */
+.login-logo {
+  max-width: 60px;
+  height: auto;
+  margin-top: 2px;
+  margin-bottom: 0rem;
+  object-fit: contain;
+  align-self: center;
+}
+
+/* Close button styles */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Styling for the registration heading */
+.registration-heading {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+mat-form-field {
+  display: block;
+  margin-bottom: 0rem;
+  width: 100%;
+}
+
+mat-form-field .mat-form-field-wrapper {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 2px;
+  background: #f9f9f9;
+}
+
+mat-form-field .mat-input-element {
+  font-size: 16px;
+  padding: 0px;
+}
+
+/* Styling for actions (button) */
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Register button styling */
+.register-btn {
+  max-width: 450px;
+  width: 95%;
+  padding: 6px;
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: rgb(100, 100, 177) !important;
+  color: white !important;
+  font-weight: bold;
+  margin-top: 0rem;
+}
+
+.register-btn:hover {
+  background-color: rgb(100, 100, 177) !important;
+}
+
+/* Styling for the login link */
+.login-link {
+  text-align: center;
+  margin-top: 0rem;
+  font-size: 12px;
+}
+
+.login-link a {
+  color: rgb(100, 100, 177);
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.country-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Footer styles */
+app-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 0px 0;
+  z-index: 999;
+  box-shadow: none;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .register-container {
+    width: 95%;
+    padding: 0.5rem;
+  }
+
+  .registration-heading {
+    font-size: 16px;
+  }
+
+  mat-form-field .mat-input-element {
+    font-size: 12px;
+    padding: 2px;
+  }
+
+  .register-btn {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .login-link {
+    font-size: 10px;
+  }
+
+  .half-width {
+    flex: 1 1 100%;
+  }
+}
+
+.back-button {
+  position: fixed;
+  bottom: 590px;
+  left: 20px;
+  z-index: 999;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  font-size: 34px;
+  font-weight: bold;
+  color: #333;
+}

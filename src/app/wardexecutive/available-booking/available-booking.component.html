@@ -1,0 +1,46 @@
+<div class="report-background" @fadeInOut>
+  <div class="report-overlay" (click)="closePopup()">
+    <div class="report-container" (click)="$event.stopPropagation()" @fadeScale>
+      <button class="close-btn" (click)="closePopup()">×</button>
+
+      <h2 class="report-title">Booking Details</h2>
+
+      <div class="report-content">
+        <div class="report-detail">
+          <strong>Space:</strong>
+          <span>{{ selectedReport?.space_name }}</span>
+        </div>
+
+        <div class="report-detail">
+          <strong>Username:</strong>
+          <span>{{ selectedReport?.username }}</span>
+        </div>
+
+        <div class="report-detail">
+          <strong>Contact:</strong>
+          <span>{{ selectedReport?.contact }}</span>
+        </div>
+
+        <div class="report-detail">
+          <strong>Purpose:</strong>
+          <p class="description-box">{{ selectedReport?.purpose }}</p>
+        </div>
+
+        <div class="report-detail">
+          <strong>District:</strong>
+          <span>{{ selectedReport?.district }}</span>
+        </div>
+
+        <div class="report-detail" *ngIf="selectedReport?.file">
+          <strong>Uploaded File:</strong>
+          <a [href]="getFullFileUrl(selectedReport.file)" target="_blank" download>Download</a>
+        </div>
+
+      </div>
+
+      <div class="actions">
+        <button mat-raised-button style="background-color: #3F51B5; color: white;" (click)="closePopup()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

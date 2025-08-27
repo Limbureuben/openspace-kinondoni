@@ -1,0 +1,423 @@
+/* Background for login area */
+.login-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('https://www.mof.go.tz/site/images/emblem.png');
+  background-size: 35%;
+  background-position: center;
+  height: calc(90vh - 15px); /* Adjust based on header & footer height */
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+/* Overlay */
+.login-overlay {
+  display: flex;
+  align-items: center; /* Vertically center the form */
+  justify-content: center; /* Horizontally center the form */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+  // background: rgba(255, 255, 255, 0.5); /* Dark overlay */
+}
+
+/* Container for login form */
+.login-container {
+  background: linear-gradient(to right, #f0f4ff, #e8f0fe);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  max-width: 350px;
+  width: 80%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure the form elements fill the container */
+  min-height: 150px; /* Minimum height of the container */
+  z-index: 1001; /* Ensure form is above the overlay */
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Logo */
+.login-logo {
+  width: 60px;
+  margin-top: -30px;
+  margin: 0 auto 0.5rem; /* Center the logo and add bottom margin */
+}
+
+/* Add styles for the country name text */
+.country-name {
+  font-size: 18px; /* Set appropriate font size */
+  font-weight: bold;
+  color: #333; /* Set text color */
+  margin-top: 10px;
+  margin-bottom: 20px; /* Adds some space below the text */
+  text-align: center; /* Center the text below the logo */
+}
+
+/* Input fields */
+.full-width mat-form-field {
+  width: 100%;
+}
+
+mat-form-field {
+  display: block;
+}
+
+mat-form-field .mat-form-field-wrapper {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  background: #f9f9f9;
+}
+
+mat-form-field .mat-input-element {
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: center;
+
+}
+
+/* Login button */
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: rgb(100, 100, 177) !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  background-color: rgb(100, 100, 177) !important;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 0px;
+  font-size: 14px;
+}
+
+.register-link a {
+  color: rgb(100, 100, 177);
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* Footer styles */
+app-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  text-align: center;
+  padding: 0px 0;
+  z-index: 999;
+  box-shadow: none; /* Remove any border */
+}
+
+/* styles scoped to the login form */
+.mat-form-field.custom-input input.ng-touched.ng-valid {
+  color: green;
+}
+
+.mat-form-field.custom-input input.ng-touched.ng-invalid {
+  color: red;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+  .login-container {
+    padding: 1.5rem; /* Reduce padding for larger tablets */
+  }
+
+  .login-logo {
+    width: 60px; /* Resize logo for larger tablets */
+  }
+
+  .country-name {
+    font-size: 16px; /* Slightly smaller font size for larger tablets */
+  }
+
+  .login-btn {
+    font-size: 14px; /* Slightly smaller font size for larger tablets */
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 1rem; /* Further reduce padding for mobile */
+  }
+
+  .login-logo {
+    width: 50px; /* Resize logo for smaller screens */
+  }
+
+  .country-name {
+    font-size: 14px; /* Make country name font smaller for mobile */
+  }
+
+  .login-btn {
+    font-size: 12px; /* Further reduce font size for mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0.5rem; /* Further reduce padding for very small screens */
+  }
+
+  .login-logo {
+    width: 40px; /* Resize logo for very small screens */
+  }
+
+  .country-name {
+    font-size: 12px; /* Further reduce country name font size for very small screens */
+  }
+
+  .login-btn {
+    font-size: 10px; /* Further reduce font size for very small screens */
+  }
+}
+
+.google-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px; /* Adjust spacing */
+}
+
+.google-login img {
+  width: 30px; /* Adjust size as needed */
+  height: 30px;
+  border-radius: 50%; /* Makes it round */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  transition: transform 0.2s ease-in-out;
+}
+
+.google-login img:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+
+.or-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  font-weight: 600;
+  color: #666;
+  font-size: 14px;
+}
+
+.or-separator::before,
+.or-separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ccc;
+  margin: 0 3px;
+}
+
+.back-button {
+  position: fixed;
+  bottom: 590px;  /* Adjust position to place the button at the bottom of the page */
+  left: 20px;    /* Adjust position to place it towards the left */
+  z-index: 999;  /* Ensure it stays above other elements */
+  background-color: transparent;  /* No background */
+  box-shadow: none;  /* No shadow */
+  border: none;  /* No border */
+  font-size: 34px;  /* Increase the font size for better visibility */
+  font-weight: bold;  /* Make the icon bold */
+  color: #333;  /* Set a color to the icon */
+}
+
+
+.forgot-password {
+  text-align: right;
+  margin: 8px 0;
+}
+
+.forgot-password a {
+  font-size: 14px;
+  color: #1976d2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// {
+//   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+//   "version": 1,
+//   "newProjectRoot": "projects",
+//   "projects": {
+//     "test": {
+//       "projectType": "application",
+//       "schematics": {
+//         "@schematics/angular:component": {
+//           "style": "scss",
+//           "standalone": false
+//         },
+//         "@schematics/angular:directive": {
+//           "standalone": false
+//         },
+//         "@schematics/angular:pipe": {
+//           "standalone": false
+//         }
+//       },
+//       "root": "",
+//       "sourceRoot": "src",
+//       "prefix": "app",
+//       "architect": {
+//         "build": {
+//           "builder": "@angular-devkit/build-angular:application",
+//           "options": {
+//             "outputPath": "dist/test",
+//             "index": "src/index.html",
+//             "browser": "src/main.ts",
+//             "polyfills": [
+//               "zone.js"
+//             ],
+//             "tsConfig": "tsconfig.app.json",
+//             "inlineStyleLanguage": "scss",
+//             "assets": [
+//               "src/favicon.ico",
+//               "src/assets"
+//             ],
+//             "styles": [
+//               "@angular/material/prebuilt-themes/azure-blue.css",
+//               "src/styles.scss",
+//               "node_modules/ngx-toastr/toastr.css",
+//               "src/theme/custom-theme.scss",
+//               "./node_modules/leaflet/dist/leaflet.css"
+//             ],
+//             "scripts": [],
+//             "server": "src/main.server.ts",
+//             "outputMode": "server",
+//             "ssr": {
+//               "entry": "src/server.ts"
+//             }
+//           },
+//           "configurations": {
+//             "production": {
+//               "budgets": [
+//                 {
+//                   "type": "initial",
+//                   "maximumWarning": "5MB",
+//                   "maximumError": "7MB"
+//                 },
+//                 {
+//                   "type": "anyComponentStyle",
+//                   "maximumWarning": "100kB",
+//                   "maximumError": "200kB"
+//                 }
+//               ],
+//               "outputHashing": "all"
+//             },
+//             "development": {
+//               "optimization": false,
+//               "extractLicenses": false,
+//               "sourceMap": true
+//             }
+//           },
+//           "defaultConfiguration": "production"
+//         },
+//         "serve": {
+//           "builder": "@angular-devkit/build-angular:dev-server",
+//           "configurations": {
+//             "production": {
+//               "buildTarget": "test:build:production"
+//             },
+//             "development": {
+//               "buildTarget": "test:build:development"
+//             }
+//           },
+//           "defaultConfiguration": "development"
+//         },
+//         "extract-i18n": {
+//           "builder": "@angular-devkit/build-angular:extract-i18n"
+//         },
+//         "test": {
+//           "builder": "@angular-devkit/build-angular:karma",
+//           "options": {
+//             "polyfills": [
+//               "zone.js",
+//               "zone.js/testing"
+//             ],
+//             "tsConfig": "tsconfig.spec.json",
+//             "inlineStyleLanguage": "scss",
+//             "assets": [
+//               {
+//                 "glob": "**/*",
+//                 "input": "public"
+//               }
+//             ],
+//             "styles": [
+//               "@angular/material/prebuilt-themes/azure-blue.css",
+//               "src/styles.scss",
+//               "node_modules/ngx-toastr/toastr.css",
+//               "src/theme/custom-theme.scss"
+//             ],
+//             "scripts": []
+//           }
+//         }
+//       }
+//     }
+//   },
+//   "cli": {
+//     "analytics": "9978f682-56d7-48f4-8c9e-844eab5328cf"
+//   }
+// }

@@ -1,0 +1,171 @@
+<div class="modern-map-container">
+  <!-- Header Controls -->
+  <div class="map-header">
+    <div class="header-left">
+      <div class="page-info">
+        <h1 class="map-title">
+          <mat-icon class="title-icon">map</mat-icon>
+          Interactive Map Administration
+        </h1>
+        <p class="map-subtitle">Manage open spaces locations and geographical data</p>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Map Style Toggle -->
+      <div class="control-group">
+        <label class="control-label">Map Style</label>
+        <mat-select #styleSelect (selectionChange)="changeMapStyle(styleSelect.value)"
+                    class="style-selector" value="streets">
+          <mat-option value="streets">
+            <mat-icon>map</mat-icon>
+            Street View
+          </mat-option>
+          <mat-option value="hybrid">
+            <mat-icon>satellite</mat-icon>
+            Satellite
+          </mat-option>
+          <mat-option value="topo">
+            <mat-icon>terrain</mat-icon>
+            Topographic
+          </mat-option>
+          <mat-option value="basic">
+            <mat-icon>layers</mat-icon>
+            Basic
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Add Location Button -->
+      <button mat-raised-button color="primary" class="add-location-btn" (click)="enableAddingMode()">
+        <mat-icon>add_location</mat-icon>
+        Add Open Space
+      </button>
+    </div>
+  </div>
+
+  <!-- Map Container -->
+  <div class="map-wrapper">
+    <!-- Coordinates Display -->
+    <div class="coordinates-display" *ngIf="clickedLat && clickedLng">
+      <div class="coordinates-header">
+        <mat-icon>my_location</mat-icon>
+        <span>Selected Coordinates</span>
+      </div>
+      <div class="coordinates-info">
+        <div class="coordinate-item">
+          <span class="coord-label">Latitude:</span>
+          <span class="coord-value">{{ clickedLat.toFixed(6) }}</span>
+        </div>
+        <div class="coordinate-item">
+          <span class="coord-label">Longitude:</span>
+          <span class="coord-value">{{ clickedLng.toFixed(6) }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Location Form -->
+    <mat-card class="location-form-card" *ngIf="showForm">
+      <mat-card-header class="form-header">
+        <div class="form-title-section">
+          <mat-card-title class="form-title">
+            <mat-icon>add_location</mat-icon>
+            Add New Open Space
+          </mat-card-title>
+          <mat-card-subtitle>Register a new open space location</mat-card-subtitle>
+        </div>
+        <button mat-icon-button class="close-form-btn" (click)="closeForm()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-header>
+
+      <mat-card-content class="form-content">
+        <form [formGroup]="addOpenspace" (ngSubmit)="onSubmit()" class="location-form">
+          <!-- Space Name -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Open Space Name</mat-label>
+            <input matInput placeholder="Enter space name" formControlName="name">
+            <mat-icon matSuffix>landscape</mat-icon>
+          </mat-form-field>
+
+          <!-- Coordinates -->
+          <div class="coordinates-row">
+            <mat-form-field appearance="outline" class="form-field half-width">
+              <mat-label>Latitude</mat-label>
+              <input matInput placeholder="Latitude" formControlName="latitude">
+              
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-field half-width">
+              <mat-label>Longitude</mat-label>
+              <input matInput placeholder="Longitude" formControlName="longitude">
+              
+            </mat-form-field>
+          </div>
+
+          <!-- District Selection -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Select District</mat-label>
+            <mat-select formControlName="district" (selectionChange)="onDistrictChange($event)">
+              <mat-option *ngFor="let d of districts" [value]="d.name">
+                <mat-icon>location_city</mat-icon>
+                {{ d.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>location_city</mat-icon>
+          </mat-form-field>
+
+          <!-- Street Selection -->
+          <mat-form-field appearance="outline" class="form-field" *ngIf="streets.length > 0">
+            <mat-label>Select Street</mat-label>
+            <mat-select formControlName="street">
+              <mat-option *ngFor="let s of streets" [value]="s.name">
+                <mat-icon>road</mat-icon>
+                {{ s.name }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>road</mat-icon>
+          </mat-form-field>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button mat-button type="button" class="cancel-btn" (click)="closeForm()">
+              <mat-icon>cancel</mat-icon>
+              Cancel
+            </button>
+            <button mat-raised-button color="primary" type="submit" class="submit-btn"
+                    [disabled]="!addOpenspace.valid">
+              <mat-icon>save</mat-icon>
+              Save Location
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Map Display -->
+    <div class="map-display" #map></div>
+  </div>
+
+  <!-- Map Legend -->
+  <div class="map-legend">
+    <div class="legend-header">
+      <mat-icon>info</mat-icon>
+      <span>Map Legend</span>
+    </div>
+    <div class="legend-items">
+      <div class="legend-item">
+        <div class="legend-marker existing"></div>
+        <span>Existing Open Spaces</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-marker new"></div>
+        <span>New Location</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-marker selected"></div>
+        <span>Selected Point</span>
+      </div>
+    </div>
+  </div>
+</div>

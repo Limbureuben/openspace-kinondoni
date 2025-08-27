@@ -1,0 +1,54 @@
+<mat-dialog-content @rotateFade class="custom-form-container" >
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2 class="form-title">Register Account</h2>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" required />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" formControlName="passwordConfirm" required />
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Select Role</mat-label>
+        <mat-select formControlName="role">
+          <mat-option value="user">Normal User</mat-option>
+          <mat-option value="staff">Staff</mat-option>
+          <mat-option value="ward_executive">Ward Executive</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Ward</mat-label>
+        <mat-select formControlName="ward">
+          <mat-option *ngFor="let ward of wardOptions" [value]="ward.id">{{ ward.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-stroked-button color="warn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    Register
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,197 @@
+<div class="dashboard-container" @cardStagger>
+  <!-- Statistics Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card openspace-card" (click)="OpenAvailableSpaces()">
+      <div class="card-background">
+        <div class="card-icon-wrapper">
+          <mat-icon class="card-icon">landscape</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">Open Spaces</h3>
+            <mat-icon class="card-arrow">arrow_forward</mat-icon>
+          </div>
+          <div class="card-stats">
+            <span class="stat-number">{{ totalOpenspaces }}</span>
+            <span class="stat-label">Total Spaces</span>
+          </div>
+          <div class="card-trend">
+            <mat-icon class="trend-icon positive">trending_up</mat-icon>
+            <span class="trend-text">Active</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card solved-card" (click)="OpenSolvedIssues()">
+      <div class="card-background">
+        <div class="card-icon-wrapper">
+          <mat-icon class="card-icon">check_circle</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">Solved Issues</h3>
+            <mat-icon class="card-arrow">arrow_forward</mat-icon>
+          </div>
+          <div class="card-stats">
+            <span class="stat-number">{{ totalHistorys }}</span>
+            <span class="stat-label">Completed</span>
+          </div>
+          <div class="card-trend">
+            <mat-icon class="trend-icon positive">trending_up</mat-icon>
+            <span class="trend-text">+12% this week</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card pending-card" (click)="OpenPendingIssues()">
+      <div class="card-background">
+        <div class="card-icon-wrapper">
+          <mat-icon class="card-icon">hourglass_empty</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="card-header">
+            <h3 class="card-title">Pending Issues</h3>
+            <mat-icon class="card-arrow">arrow_forward</mat-icon>
+          </div>
+          <div class="card-stats">
+            <span class="stat-number">{{ totalReport }}</span>
+            <span class="stat-label">Awaiting Action</span>
+          </div>
+          <div class="card-trend">
+            <mat-icon class="trend-icon warning">schedule</mat-icon>
+            <span class="trend-text">Needs attention</span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+
+  </div>
+
+  <!-- Recent Reports Section -->
+  <div class="reports-section">
+    <mat-card class="reports-card">
+      <div class="section-header">
+        <div class="header-left">
+          <h2 class="section-title">Recent Reports</h2>
+          <p class="section-subtitle">Latest activity from your system</p>
+        </div>
+        <div class="header-right">
+          <button mat-button class="view-all-btn">
+            View All
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="recentReports" class="modern-table">
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-cell">
+                <mat-icon>location_on</mat-icon>
+                <span>Open Space</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let report">
+              <div class="cell-content">
+                <div class="primary-text">{{report.spaceName}}</div>
+                <div class="secondary-text">Location details</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-cell">
+                <mat-icon>info</mat-icon>
+                <span>Status</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let report">
+              <div class="status-badge pending">
+                <mat-icon>schedule</mat-icon>
+                <span>Pending</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-cell">
+                <mat-icon>schedule</mat-icon>
+                <span>Date</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let report">
+              <div class="cell-content">
+                <div class="primary-text">{{report.createdAt | date:'MMM dd, yyyy'}}</div>
+                <div class="secondary-text">{{report.createdAt | date:'HH:mm'}}</div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+              <div class="header-cell">
+                <span>Actions</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let report">
+              <div class="action-buttons">
+                <button mat-icon-button class="action-btn view-btn" title="View Details">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button class="action-btn edit-btn" title="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsWithActions"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsWithActions;"
+              class="table-row"
+              (click)="viewReportDetails(row)"></tr>
+        </table>
+
+        <!-- Empty State -->
+        <div *ngIf="recentReports.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">inbox</mat-icon>
+          <h3>No Recent Reports</h3>
+          <p>When reports are submitted, they'll appear here.</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Quick Actions Section -->
+  <div class="quick-actions">
+    <mat-card class="actions-card">
+      <div class="section-header">
+        <h3 class="section-title">Quick Actions</h3>
+        <p class="section-subtitle">Common administrative tasks</p>
+      </div>
+      <div class="actions-grid">
+        <button mat-raised-button class="quick-action-btn" (click)="OpenAvailableSpaces()">
+          <mat-icon>add_location</mat-icon>
+          <span>Add Space</span>
+        </button>
+        <button mat-raised-button class="quick-action-btn">
+          <mat-icon>person_add</mat-icon>
+          <span>Add User</span>
+        </button>
+        <button mat-raised-button class="quick-action-btn">
+          <mat-icon>assessment</mat-icon>
+          <span>Generate Report</span>
+        </button>
+        <button mat-raised-button class="quick-action-btn">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</div>

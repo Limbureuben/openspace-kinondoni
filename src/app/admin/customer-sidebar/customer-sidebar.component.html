@@ -1,0 +1,6 @@
+<mat-nav-list>
+  <a mat-list-item *ngFor="let item of MenuItems()" [routerLink]="item.route" (click)="item.label === 'Logout' && onLogout()">
+    <mat-icon matListItemIcon [ngStyle]="{ color: item.color }">{{item.icon}}</mat-icon>
+    <span matListItemTitle>{{ item.label}}</span>
+  </a>
+</mat-nav-list>

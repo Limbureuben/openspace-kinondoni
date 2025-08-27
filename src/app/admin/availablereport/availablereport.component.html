@@ -1,0 +1,272 @@
+<div class="modern-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">
+          <mat-icon class="title-icon">report</mat-icon>
+          Reports Management
+        </h1>
+        <p class="page-subtitle">Monitor and manage all submitted reports from the field</p>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ dataSource.data.length }}</span>
+          <span class="stat-label">Total Reports</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getPendingReportsCount() }}</span>
+          <span class="stat-label">Pending</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getRecentReportsCount() }}</span>
+          <span class="stat-label">This Week</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls Section -->
+  <mat-card class="controls-card">
+    <div class="controls-header">
+      <div class="controls-left">
+        <h3 class="controls-title">Filter & Search Reports</h3>
+        <p class="controls-subtitle">Find specific reports by ID, location, or submitter</p>
+      </div>
+      <div class="controls-right">
+        <button mat-raised-button color="accent" class="export-btn">
+          <mat-icon>download</mat-icon>
+          Export Reports
+        </button>
+      </div>
+    </div>
+
+    <div class="search-controls">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search reports</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by report ID, space name, or location...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by Status</mat-label>
+        <mat-select (selectionChange)="filterByStatus($event.value)">
+          <mat-option value="all">All Reports</mat-option>
+          <mat-option value="pending">Pending Only</mat-option>
+          <mat-option value="recent">Recent Reports</mat-option>
+        </mat-select>
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Filter by District</mat-label>
+        <mat-select (selectionChange)="filterByDistrict($event.value)">
+          <mat-option value="all">All Districts</mat-option>
+          <mat-option *ngFor="let district of getUniqueDistricts()" [value]="district">
+            {{ district }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>place</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <!-- Data Table -->
+  <mat-card class="table-card">
+    <div class="table-header">
+      <div class="table-info">
+        <h3 class="table-title">Reports Directory</h3>
+        <p class="table-subtitle">{{ dataSource.data.length }} reports found</p>
+      </div>
+      <div class="table-actions">
+        <button mat-icon-button class="refresh-btn" (click)="refreshData()" title="Refresh Data">
+          <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-icon-button class="view-mode-btn" title="Toggle View Mode">
+          <mat-icon>view_list</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="modern-table" @tableEnterAnimation>
+
+        <!-- Report ID Column -->
+        <ng-container matColumnDef="report_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>tag</mat-icon>
+              <span>Report ID</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="cell-content">
+              <div class="primary-text">#{{ report.report_id }}</div>
+              <div class="secondary-text">{{ getReportDate(report) }}</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Space Name Column -->
+        <ng-container matColumnDef="space_name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>landscape</mat-icon>
+              <span>Open Space</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="cell-content">
+              <div class="primary-text">{{ report.space_name }}</div>
+              <div class="secondary-text">{{ report.street }}</div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Location Column -->
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>place</mat-icon>
+              <span>Location</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="location-cell">
+              <div class="location-item">
+                <mat-icon class="location-icon">location_city</mat-icon>
+                <span class="location-text">{{ report.district }}</span>
+              </div>
+              <div class="location-item">
+                <mat-icon class="location-icon">road</mat-icon>
+                <span class="location-text">{{ report.street }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Submitter Column -->
+        <ng-container matColumnDef="from_user">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>person</mat-icon>
+              <span>Submitted By</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="submitter-cell">
+              <div class="submitter-avatar">
+                <mat-icon>account_circle</mat-icon>
+              </div>
+              <div class="submitter-info">
+                <div class="primary-text">{{ report.from_user }}</div>
+                <div class="secondary-text">Ward Executive</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <mat-icon>info</mat-icon>
+              <span>Status</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="status-badge pending">
+              <mat-icon>schedule</mat-icon>
+              <span>Pending Review</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <div class="header-cell">
+              <span>Actions</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="action-buttons">
+              <button mat-icon-button
+                      class="action-btn view-btn"
+                      (click)="viewReport(report); $event.stopPropagation()"
+                      title="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button
+                      class="action-btn reply-btn"
+                      (click)="replyToReport(report); $event.stopPropagation()"
+                      title="Reply to Report">
+                <mat-icon>reply</mat-icon>
+              </button>
+              <button mat-icon-button
+                      class="action-btn location-btn"
+                      title="View on Map">
+                <mat-icon>map</mat-icon>
+              </button>
+              <button mat-icon-button
+                      class="action-btn more-btn"
+                      [matMenuTriggerFor]="actionMenu"
+                      title="More Actions">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+              <!-- Action Menu -->
+              <mat-menu #actionMenu="matMenu">
+                <button mat-menu-item (click)="markAsResolved(report)">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>Mark as Resolved</span>
+                </button>
+                <button mat-menu-item (click)="assignToTeam(report)">
+                  <mat-icon>group</mat-icon>
+                  <span>Assign to Team</span>
+                </button>
+                <button mat-menu-item (click)="exportReport(report)">
+                  <mat-icon>download</mat-icon>
+                  <span>Export Report</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="deleteReport(report)" class="delete-action">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete Report</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            class="table-row clickable-row"
+            (click)="viewReport(row)"
+            @rowAnimation
+            title="Click to view full report details"></tr>
+      </table>
+
+      <!-- Empty State -->
+      <div *ngIf="dataSource.data.length === 0" class="empty-state">
+        <mat-icon class="empty-icon">report</mat-icon>
+        <h3>No Reports Found</h3>
+        <p>No reports match your current search criteria.</p>
+        <button mat-raised-button color="primary" class="refresh-empty-btn" (click)="refreshData()">
+          <mat-icon>refresh</mat-icon>
+          Refresh Data
+        </button>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <mat-paginator #paginator
+                     [pageSizeOptions]="[5, 10, 20, 50]"
+                     [pageSize]="10"
+                     showFirstLastButtons
+                     class="modern-paginator">
+      </mat-paginator>
+    </div>
+  </mat-card>
+</div>

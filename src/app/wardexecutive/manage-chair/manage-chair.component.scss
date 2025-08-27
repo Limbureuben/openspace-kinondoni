@@ -1,0 +1,79 @@
+.table-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(100, 100, 177);
+  min-height: 490px; /* Set a minimum height to maintain sidebar height */
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.table-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: rgb(100, 100, 177);
+}
+
+.search-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.search-field {
+  width: 300px;
+}
+
+.custom-table {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.mat-header-cell {
+  background-color: #3f51b5; /* Blue color for the header */
+  color: white;
+  font-weight: bold;
+}
+
+.mat-cell {
+  background-color: white;
+}
+
+.active {
+  color: green;
+}
+
+.inactive {
+  color: red;
+}
+
+.confirmed-icon {
+  color: green;
+}
+
+.mat-paginator {
+  margin-top: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* spacing between delete and toggle */
+}
+
+.status-btn {
+  font-size: 14px;
+  line-height: 1;
+  height: 36px;             /* match icon button height */
+  padding: 0 12px;
+  min-width: unset;         /* avoid default wide Material button */
+  text-transform: none;     /* keeps text like 'Active', not 'ACTIVE' */
+  display: flex;
+  align-items: center;
+}
+

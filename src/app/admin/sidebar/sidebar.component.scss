@@ -1,0 +1,15 @@
+/* Add styles to the .content class */
+// .content {
+//   padding: 287.5px;
+// }
+
+mat-toolbar {
+  position: relative;
+  z-index: 5;
+  color: rgb(100, 100, 177);
+  background-color: rgb(100, 100, 177);
+}
+
+mat-sidenav-container {
+  height: calc(100hv - 64px);
+}

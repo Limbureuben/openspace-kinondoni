@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Accept Booking</h1>
+<div mat-dialog-content>
+  <p>Please enter a description for accepting this booking:</p>
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="description"
+      rows="4"
+      placeholder="Enter description here..."></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">Submit</button>
+</div>

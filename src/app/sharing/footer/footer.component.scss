@@ -1,0 +1,47 @@
+.footer-toolbar {
+  background-color: white; /* White background */
+  color: #555; /* Text color */
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin-top: 135px;
+  font-size: 10px;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the content */
+}
+
+.footer-left, .footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.footer-left a, .footer-right a {
+  color: #007bff; /* Link color */
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.footer-left a:hover, .footer-right a:hover {
+  text-decoration: underline;
+}
+
+.footer-right span {
+  margin-right: 5px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-left, .footer-right {
+    margin-bottom: 10px;
+  }
+}

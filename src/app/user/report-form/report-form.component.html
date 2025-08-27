@@ -1,0 +1,49 @@
+<div class="report-background">
+  <div class="report-overlay" (click)="closeForm()">
+    <div class="report-container" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeForm()">×</button>
+
+      <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+        <!-- Issue Description -->
+        <mat-form-field appearance="outline" class="full-width custom-input">
+          <mat-label>Issue Description</mat-label>
+          <textarea matInput formControlName="description" placeholder="Describe the issue here" required></textarea>
+        </mat-form-field>
+
+        <!-- Contact Email (Optional) -->
+        <mat-form-field appearance="outline" class="full-width custom-input">
+          <mat-label>Your Email (Optional)</mat-label>
+          <input matInput formControlName="email" placeholder="Enter your email (optional)" type="email" />
+        </mat-form-field>
+
+        <!-- Mtaa Dropdown -->
+        <mat-form-field appearance="outline" class="full-width custom-input">
+          <mat-label>Select Mtaa</mat-label>
+          <mat-select formControlName="mtaa" required>
+            <mat-option *ngFor="let mtaa of mtaaOptions" [value]="mtaa">
+              {{ mtaa }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <!-- File Upload (Styled as Material UI) -->
+        <div class="file-upload-container">
+          <label class="file-upload-label">Upload File (Optional)</label>
+
+          <!-- File Input Wrapper for Full Width -->
+          <div class="file-input-wrapper">
+            <input type="file" id="file-upload" (change)="onFileSelected($event)" />
+            <span class="file-name">{{ selectedFileName || 'No file chosen' }}</span>
+          </div>
+        </div>
+        <!-- Submit Button -->
+        <div class="actions">
+          <button mat-raised-button type="submit" style="background-color: rgb(100, 100, 177); color: white;">
+            Submit Report
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
