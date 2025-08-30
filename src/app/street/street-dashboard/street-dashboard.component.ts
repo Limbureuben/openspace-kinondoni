@@ -2,6 +2,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 import { Component, OnInit } from '@angular/core';
 import { OpenspaceService } from '../../service/openspace.service';
 import { Router } from '@angular/router';
+import { BookingService } from '../../service/booking.service';
 
 @Component({
   selector: 'app-street-dashboard',
@@ -23,16 +24,25 @@ import { Router } from '@angular/router';
 })
 export class StreetDashboardComponent implements OnInit{
     recentReports: any[] = [];
-  displayedColumns: string[] = ['title', 'status', 'date'];
-  displayedColumnsWithActions: string[] = ['title', 'status', 'date', 'actions'];
+    displayedColumnsWithActions: string[] = ['space_name', 'status', 'street', 'actions'];
 
   totalOpenspaces: number = 0;
   totalHistorys: number = 0;
   totalReport: number = 0;
+    isLoading: boolean = false;
+    availableOpenspaces: number = 0
+    unavailableOpenspaces: number = 0;
+    totalForwardedReports: number = 0;
+    totalReportsAll: number = 0;
+    totalReportedReports: number = 0;
+    totalPendingReports: number = 0;
+
+    wardName: String = '';
 
   constructor(
     private opespace: OpenspaceService,
-    private router: Router
+    private router: Router,
+    private bookingService: BookingService,
   ) {}
 
 
@@ -63,22 +73,24 @@ export class StreetDashboardComponent implements OnInit{
         console.error('Error fetching report pending')
       }
     });
-    this.fetchRecentReports();
+    this.loadRecentReports();
 }
 
-  fetchRecentReports() {
-  this.opespace.getRecentReports().subscribe({
-    next: (reports: any[]) => {
-      const sortedReports = [...reports].sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      );
-      this.recentReports = sortedReports.slice(0, 3);
-    },
-    error: (error) => {
-      console.error('Error fetching recent reports', error);
-    }
-  });
-}
+loadRecentReports(): void {
+    this.bookingService.getReportsByStreet().subscribe({
+      next: (data) => {
+        // assuming data is an array of reports
+        this.recentReports = data
+          .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) // sort by date desc
+          .slice(0, 3); // take only 3 latest
+      },
+      error: (err) => {
+        console.error('Error fetching reports', err);
+        this.recentReports = [];
+      }
+    });
+  }
+
 
 
 

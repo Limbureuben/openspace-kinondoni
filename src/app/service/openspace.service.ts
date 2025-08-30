@@ -108,6 +108,13 @@ export class OpenspaceService {
     }).valueChanges;
   }
 
+  getDashboardCounts(): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.get(`${this.resetUrl}/openspaces/count/ward/`, { headers });
+  }
+
+
   toggleOpenSpaceStatus(id: string, isActive: boolean): Observable<any> {
     return this.apollo.mutate<ToggleOpenSpaceResponse>({
       mutation: TOGGLE_OPENSPACE_STATUS,
@@ -177,6 +184,8 @@ export class OpenspaceService {
       query: GET_ALL_REPORTS,
     }).valueChanges.pipe(map(result => result.data.allReports));
   }
+
+
 
 
   getAllHistory(): Observable<any> {
@@ -327,5 +336,10 @@ getWards(): Observable<any> {
     return this.http.post(`${this.resetUrl}/reports/${reportId}/forward/`, {}, { headers });
   }
 
+
+
+  replyToReport(reportId: string, message: string): Observable<any> {
+    return this.http.post<any>(`${this.resetUrl}/reports/${reportId}/reply/`, { message });
+  }
 
 }

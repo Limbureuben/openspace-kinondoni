@@ -77,6 +77,16 @@ export class BookingService {
   }
 
 
+  getReportsByStreet(): Observable<Report[]> {
+    const token = localStorage.getItem('token'); // or wherever you store JWT
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.get<Report[]>(`${this.resetUrl}/api/v1/street-reports/`, { headers });
+  }
+
+
+
   getStreetReports(): Observable<Report[]> {
     const token = localStorage.getItem('token'); // or wherever you store JWT
     const headers = new HttpHeaders({

@@ -17,8 +17,7 @@ export type MenuItem = {
 })
 export class WardCustomersidebarComponent {
   MenuItems = signal<MenuItem[]>([
-    { icon: 'dashboard', label: 'Dashboard', route: 'ward-bookings', color: 'rgb(100, 100, 177)' },
-    { icon: 'map', label: 'Map', route: '#', color: 'rgb(100, 100, 177)' },
+    { icon: 'dashboard', label: 'Dashboard', route: 'ward-dashboard', color: 'rgb(100, 100, 177)' },
     { icon: 'supervisor_account', label: 'ChairPerson', route: 'manage-chair', color: 'rgb(100, 100, 177)' },
     { icon: 'report', label: 'Reports', route: 'available-report', color: 'rgb(100, 100, 177)' },
     { icon: 'notifications', label: 'Notifications', route: '#', color: 'rgb(100, 100, 177)' },

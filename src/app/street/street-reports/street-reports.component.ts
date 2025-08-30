@@ -10,6 +10,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal from 'sweetalert2';
 import { ReportDialogComponent } from '../report-dialog/report-dialog.component';
 import { OpenspaceService } from '../../service/openspace.service';
+import { ReplyDialogComponent } from '../reply-dialog/reply-dialog.component';
 
 @Component({
   selector: 'app-street-reports',
@@ -109,60 +110,6 @@ export class StreetReportsComponent {
     console.log('Confirming booking:', reportId);
   }
 
-
-
-//   forwardReport(forwardedReport: any): void {
-//   console.log('Forward report called with data:', forwardedReport);
-
-//   // Check if report is already forwarded to admin
-//   if (forwardedReport.forwarded_to_admin) {
-//     this.toastr.info('This report has already been forwarded to admin.', 'Info', {
-//       positionClass: 'toast-top-right',
-//       timeOut: 3000
-//     });
-//     return;
-//   }
-
-//   // Ensure forwardId exists
-//   const forwardId = forwardedReport.id;
-//   if (!forwardId) {
-//     this.toastr.error('Forward ID is missing. Cannot forward.', 'Error', {
-//       positionClass: 'toast-top-right',
-//       timeOut: 3000
-//     });
-//     console.error('Missing forward ID:', forwardedReport);
-//     return;
-//   }
-
-//   // Prepare the report message
-//   const reportMessage = forwardedReport.message || forwardedReport.report?.message || '';
-//   const messagePreview = reportMessage
-//     ? `<br><br><strong>Report Message:</strong><br>"${reportMessage}"`
-//     : '<br><em>No message in this report.</em>';
-
-//   const reportId = forwardedReport.report?.report_id || forwardedReport.report_id;
-
-//   Swal.fire({
-//     title: 'Forward Report to Admin',
-//     html: `
-//       <p>Are you sure you want to forward this report (ID: ${reportId}) to the admin?</p>
-//       ${messagePreview}
-//     `,
-//     icon: 'question',
-//     showCancelButton: true,
-//     confirmButtonColor: '#3085d6',
-//     cancelButtonColor: '#d33',
-//     confirmButtonText: 'Yes, Forward it!',
-//     cancelButtonText: 'Cancel'
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       this.performForwardReport(forwardId, reportMessage);
-//     }
-//   });
-// }
-
-
-
 forwardReport(row: any) {
     this.reportService.forwardReportToWard(row.id).subscribe({
       next: (res) => {
@@ -237,15 +184,26 @@ viewReportDetails(report: any) {
     });
   }
 
+  
 
+replyReport(row: any) {
+  const dialogRef = this.dialog.open(ReplyDialogComponent, {
+    width: '400px',
+    data: { reportId: row.report_id }
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      // The dialog already sent the reply, just show feedback
+      this.snackBar.open('Reply sent successfully!', 'Close', { duration: 3000 });
 
-
-replyReport(report: any): void {
-  console.log('Reply to report:', report);
-  this.selectedReport = report;
-  this.showPopup = true;
+      // Optionally refresh your report list
+      this.loadStreetReports();
+    }
+  });
 }
+
+
 
 
 

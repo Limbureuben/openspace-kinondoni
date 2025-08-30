@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Reply to Reporter</h2>
+<mat-dialog-content>
+  <form [formGroup]="replyForm">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Message</mat-label>
+      <textarea matInput rows="5" formControlName="message"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="closeDialog()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="sendReply()" [disabled]="replyForm.invalid">Send</button>
+</mat-dialog-actions>

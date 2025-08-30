@@ -28,6 +28,7 @@ import { StreetReportsComponent } from './street-reports/street-reports.componen
 import { ReportDialogComponent } from './report-dialog/report-dialog.component';
 import { StreetDirectionComponent } from './street-direction/street-direction.component'
 import { TrustedUrlPipe } from '../pipes/pipes/trusted-url.pipe';
+import { ReplyDialogComponent } from './reply-dialog/reply-dialog.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { TrustedUrlPipe } from '../pipes/pipes/trusted-url.pipe';
     StreetReportsComponent,
     ReportDialogComponent,
     StreetDirectionComponent,
-    TrustedUrlPipe
+    TrustedUrlPipe,
+    ReplyDialogComponent
   ],
   imports: [
     CommonModule,
