@@ -35,7 +35,7 @@ import { ReplyComponent } from '../reply/reply.component';
 })
 export class AvailablereportComponent implements OnInit{
   dataSource = new MatTableDataSource<any>([]);
-  displayedColumns: string[] = ['report_id', 'space_name', 'location', 'from_user', 'status', 'actions'];
+  displayedColumns: string[] = ['id', 'report_id', 'space_name', 'location', 'from_user', 'status', 'actions'];
   originalData: any[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -138,11 +138,9 @@ export class AvailablereportComponent implements OnInit{
     });
 }
 
-
-
   // New helper methods for the enhanced UI
   getPendingReportsCount(): number {
-    return this.dataSource.data.length; // Assuming all reports are pending
+    return this.dataSource.data.length;
   }
 
   getRecentReportsCount(): number {
@@ -173,7 +171,7 @@ export class AvailablereportComponent implements OnInit{
     if (status === 'all') {
       this.dataSource.data = this.originalData;
     } else if (status === 'pending') {
-      this.dataSource.data = this.originalData; // All are pending for now
+      this.dataSource.data = this.originalData;
     } else if (status === 'recent') {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
@@ -195,11 +193,11 @@ export class AvailablereportComponent implements OnInit{
   }
 
   replyToReport(report: any): void {
+    console.log('Report id is this', report.id)
     const dialogRef = this.dialog.open(ReplyComponent, {
       width: '600px',
       data: { report }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.toastr.success('Reply sent successfully', 'Success');
@@ -207,6 +205,7 @@ export class AvailablereportComponent implements OnInit{
     });
   }
 
+  
   markAsResolved(report: any): void {
     console.log('Mark as resolved:', report);
     this.toastr.success('Report marked as resolved', 'Success');

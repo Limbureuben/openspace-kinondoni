@@ -91,6 +91,20 @@
     <div class="table-container">
       <table mat-table [dataSource]="dataSource" matSort class="modern-table" @tableEnterAnimation>
 
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="header-cell">
+              <mat-icon>tag</mat-icon>
+              <span>ID</span>
+            </div>
+          </th>
+          <td mat-cell *matCellDef="let report">
+            <div class="cell-content">
+              <div class="primary-text">{{ report.id }}</div>
+            </div>
+          </td>
+        </ng-container>
+
         <!-- Report ID Column -->
         <ng-container matColumnDef="report_id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -101,7 +115,7 @@
           </th>
           <td mat-cell *matCellDef="let report">
             <div class="cell-content">
-              <div class="primary-text">#{{ report.report_id }}</div>
+              <div class="primary-text">{{ report.report_id }}</div>
               <div class="secondary-text">{{ getReportDate(report) }}</div>
             </div>
           </td>

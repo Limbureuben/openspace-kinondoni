@@ -120,8 +120,11 @@ getAdminBookingsByDistrict(): Observable<any> {
     return this.http.get(`${this.resetUrl}/api/v1/my-bookings`);
   }
 
-  replyToReport(reportId: number, message: string) {
-    return this.http.post(`${this.resetUrl}/api/v1/reply-report/${reportId}/`, { message });
+
+  replyToReport(reportId: number, message: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.post(`${this.resetUrl}/api/v1/reports/reply/${reportId}/`, { message }, { headers });
   }
 
   deleteReport(reportId: number) {
@@ -129,7 +132,7 @@ getAdminBookingsByDistrict(): Observable<any> {
   }
 
     sendReply(reportId: string, message: string) {
-    return this.http.post(`${this.resetUrl}/Api/reports/reply/`, {
+    return this.http.post(`${this.resetUrl}/api/reports/reply/`, {
       report_id: reportId,
       message: message
     });
@@ -182,37 +185,6 @@ sendNotificationToWardExecutive(email: string, message: string) {
       map(response => response.unread_count || 0)
     );
 }
-
-  // forwardReportToAdmin(reportId: number): Observable<any> {
-  //   const token = localStorage.getItem('token');
-  //   const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  //   return this.http.post(`${this.resetUrl}/api/reports/${reportId}/forward-to-admin/`, {}, { headers })
-  //     .pipe(
-  //       catchError(error => {
-  //         console.error('Error forwarding report to admin:', error);
-  //         return throwError(() => error);
-  //       })
-  //     );
-  // }
-
-
-//   forwardReportToAdmin(forwardId: number, message: string = ''): Observable<any> {
-//     const token = localStorage.getItem('token');
-//     const headers = new HttpHeaders({
-//       'Authorization': `Bearer ${token}`,
-//       'Content-Type': 'application/json'
-//     });
-//     return this.http.post(
-//       `${this.resetUrl}/api/reports/forwarded/${forwardId}/forward-to-admin/`,
-//       { message },
-//       { headers }
-//     ).pipe(
-//       catchError(error => {
-//         console.error('Error forwarding report to admin:', error);
-//         return throwError(() => error);
-//       })
-//     );
-// }
 
 
 forwardReportToAdmin(forwardId: number, message: string = ''): Observable<any> {
